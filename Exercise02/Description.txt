@@ -1,0 +1,9 @@
+Requirements:
+ + There should be a page to show a list of products
+ + Each product will have a button. When this button is clicked, the corresponding product will be added to/removed from the cart.
+ + There should be a cart to store selected product.
+ + There should be a 'Check Out' button so that user can click onto to navigate to the Cart Details page.
+ + There should be a Cart Details page to show cart items (selected products).
+
+Optional requirements:
+ + There should be a page to add new products to the product list (optional)

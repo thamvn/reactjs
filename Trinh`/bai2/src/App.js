@@ -25,6 +25,21 @@ class App extends React.Component {
 
     this.onClickButton = this.onClickButton.bind(this);
     this.updateCheckoutList = this.updateCheckoutList.bind(this);
+    this.onAddItem = this.onAddItem.bind(this);
+  }
+
+  onAddItem(name, price, e) {
+    if (!isNaN(price)) {
+      let tmpItemList = this.state.itemList;
+      let item = {name: name, price: price};
+      item.id = tmpItemList[tmpItemList.length - 1].id + 1;
+      item.selected = false;
+      console.log(item);
+      tmpItemList.push(item);
+      this.setState({itemList: tmpItemList});
+      alert('Add item successfully')
+    }
+    else alert('Price must be a number!');
   }
 
   updateCheckoutList(modifiedItem) {
@@ -59,8 +74,6 @@ onClickButton(itemId, e) {
 }
 
   render() {
-    // this.props.itemList = itemList;
-    // this.props.checkoutList = checkoutList;
     return (
       <Router>
         {/* <Switch> */}
@@ -81,12 +94,8 @@ onClickButton(itemId, e) {
             totalPrice={this.state.totalPrice}
             randomKey={Math.random()}
             />}/>
-          <Route name="Items" path="/add" render={(props) => <AddItem {...props} 
-            itemList={this.state.itemList} 
-            checkoutList={this.state.checkoutList}
-            totalPrice={this.state.totalPrice}
-            updateCheckoutList={this.updateCheckoutList}
-            onClickButton={this.onClickButton}
+          <Route name="Add Item" path="/add" render={(props) => <AddItem {...props} 
+            onAddItem={this.onAddItem}
             randomKey={Math.random()}
             />} />
         {/* </Switch> */}

@@ -1,27 +1,18 @@
 import React from 'react';
-import ItemEntry from '../components/ItemEntry'
 
 class AddItem extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            itemList: [],
-            checkoutList: [],
-            totalPrice: 0
+            name: '',
+            price: ''
         }
         
-        this.onClickButton = this.props.onClickButton.bind(this);
-        this.updateCheckoutList = this.props.updateCheckoutList.bind(this);
-        this.onClickCheckout = this.onClickCheckout.bind(this);
-    }
-
-    componentDidMount() {
-        this.setState({
-            itemList: this.props.itemList,
-            checkoutList: this.props.checkoutList,
-            totalPrice: this.props.totalPrice
-        })
+        this.onAddItem = this.props.onAddItem.bind(this);
+        this.onNameChange = this.onNameChange.bind(this);
+        this.onPriceChange = this.onPriceChange.bind(this);
+        this.clearInput = this.clearInput.bind(this);
     }
 
     onClickCheckout(e){
@@ -29,31 +20,32 @@ class AddItem extends React.Component {
         this.props.history.push('/checkout');
     }
 
+    onNameChange(e) {
+        this.setState({name : e.target.value});
+    }
+
+    onPriceChange(e) {
+        this.setState({price : e.target.value});
+    }
+
+    clearInput() {
+        this.setState({price : '', name: ''});
+    }
+
     render() {
         return (
             <div>
-                {this.state.itemList.map((el) => {
-                    return(
-                        <ItemEntry item={el} onClickButton={this.onClickButton} />
-                    )
-                })}
-                <button classname="btn btn-default" onClick={this.onClickCheckout}>Checkout</button>           
+                <div className='label'>Name</div>
+                <input type="text" className="form-control" value={this.state.name} onChange={this.onNameChange} />
+                <div className='label'>Price (in USD)</div>
+                <input type="text" className="form-control" value={this.state.price} onChange={this.onPriceChange} />
+                <div>
+                    <button type="button" className="btn btn-default" onClick={e => {
+                        this.onAddItem(this.state.name, parseFloat(this.state.price), e); 
+                        if (!isNaN(this.state.price)) this.clearInput();
+                    }}>Add</button>
+                </div>
             </div>
-
-            // <div>
-            //     <div classname="container">
-            //         <table classname="table-bordered" table-layout="fixed">
-            //             <tbody>
-            //                 <tr>
-            //                     <td>sdsds</td>
-            //                     <td>sdsds</td>
-            //                     <td>sdsds</td>
-            //                     <td>sdsds</td>
-            //                 </tr>
-            //             </tbody>
-            //         </table>
-            //     </div>
-            // </div>
         )
     }
 }

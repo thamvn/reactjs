@@ -9,6 +9,9 @@ class Home extends React.Component {
                     <Link to="/" >Home</Link>
                 </li>
                 <li>
+                    <Link to="/add" >Add Items</Link>
+                </li>
+                <li>
                     <Link to="/items" >Items</Link>
                 </li>
                 <li>

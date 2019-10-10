@@ -34,7 +34,7 @@ class Items extends React.Component {
             <div>
                 {this.state.itemList.map((el) => {
                     return(
-                        <ItemEntry item={el} onClickButton={this.onClickButton} />
+                        <ItemEntry item={el} onClickButton={this.onClickButton} renderButton={true}/>
                     )
                 })}
                 <button classname="btn btn-default" onClick={this.onClickCheckout}>Checkout</button>           

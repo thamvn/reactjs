@@ -98,6 +98,7 @@ onClickButton(itemId, e) {
           randomKey={Math.random()}
           itemList={this.state.itemList}
           onClickButton={this.onClickButton}
+          renderButton={false}
           />} />
       </Router>
     );

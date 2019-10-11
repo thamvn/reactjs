@@ -55,7 +55,7 @@ class Checkout extends React.Component {
                                 <div className="card-body">
                                     <h3 className="card-title">Item: {item.name}</h3>
                                     <h3 className="card-text">Price: {item.price}</h3>
-                                    <img src={item.imagePreviewUrl} style={{ height: "300px", width: "500px" }}/>
+                                    <img src={item.thumbnail} style={{ height: "150px", width: "300px" }}/>
                                     <button onClick={e => this.remove(item, e)} >Remove</button>
                                 </div>
                             </div>

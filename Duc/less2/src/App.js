@@ -12,32 +12,38 @@ class App extends React.Component {
         {
           name: "item 1",
           price: "5",
-          imagePreviewUrl:null
+          imagePreviewUrl:null,
+          thumbnail:null
         },
         {
           name: "item 2",
           price: "2",
-          imagePreviewUrl:null
+          imagePreviewUrl:null,
+          thumbnail:null
         },
         {
           name: "item 3",
           price: "1",
-          imagePreviewUrl:null
+          imagePreviewUrl:null,
+          thumbnail:null
         },
         {
           name: "item 4",
           price: "4",
-          imagePreviewUrl:null
+          imagePreviewUrl:null,
+          thumbnail:null
         },
         {
           name: "item 5",
           price: "3",
-          imagePreviewUrl:null
+          imagePreviewUrl:null,
+          thumbnail:null
         },
         {
           name: "item 6",
           price: "7",
-          imagePreviewUrl:null          
+          imagePreviewUrl:null    ,
+          thumbnail:null      
         }
       ],
       pickedItems: [],
@@ -45,32 +51,254 @@ class App extends React.Component {
         {
           name: "item 1",
           price: "5",
-          imagePreviewUrl:null
+          imagePreviewUrl:null,
+          thumbnail:null
         },
         {
           name: "item 2",
           price: "2",
-          imagePreviewUrl:null
+          imagePreviewUrl:null,
+          thumbnail:null
         },
         {
           name: "item 3",
           price: "1",
-          imagePreviewUrl:null
+          imagePreviewUrl:null,
+          thumbnail:null
         },
         {
           name: "item 4",
           price: "4",
-          imagePreviewUrl:null
+          imagePreviewUrl:null,
+          thumbnail:null
         },
         {
           name: "item 5",
           price: "3",
-          imagePreviewUrl:null
+          imagePreviewUrl:null,
+          thumbnail:null
         },
         {
           name: "item 6",
           price: "7",
-          imagePreviewUrl:null          
+          imagePreviewUrl:null     ,
+          thumbnail:null     
+        },
+        {
+          name: "item 1",
+          price: "5",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 2",
+          price: "2",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 3",
+          price: "1",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 4",
+          price: "4",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 5",
+          price: "3",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 6",
+          price: "7",
+          imagePreviewUrl:null     ,
+          thumbnail:null     
+        },
+        {
+          name: "item 1",
+          price: "5",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 2",
+          price: "2",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 3",
+          price: "1",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 4",
+          price: "4",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 5",
+          price: "3",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 6",
+          price: "7",
+          imagePreviewUrl:null,
+          thumbnail:null          
+        },
+        {
+          name: "item 1",
+          price: "5",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 2",
+          price: "2",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 3",
+          price: "1",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 4",
+          price: "4",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 5",
+          price: "3",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 6",
+          price: "7",
+          imagePreviewUrl:null,
+          thumbnail:null          
+        },
+        {
+          name: "item 1",
+          price: "5",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 2",
+          price: "2",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 3",
+          price: "1",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 4",
+          price: "4",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 5",
+          price: "3",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 6",
+          price: "7",
+          imagePreviewUrl:null,
+          thumbnail:null          
+        },
+        {
+          name: "item 1",
+          price: "5",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 2",
+          price: "2",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 3",
+          price: "1",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 4",
+          price: "4",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 5",
+          price: "3",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 6",
+          price: "7",
+          imagePreviewUrl:null,
+          thumbnail:null          
+        },
+        {
+          name: "item 1",
+          price: "5",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 2",
+          price: "2",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 3",
+          price: "1",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 4",
+          price: "4",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 5",
+          price: "3",
+          imagePreviewUrl:null,
+          thumbnail:null
+        },
+        {
+          name: "item 6",
+          price: "7",
+          imagePreviewUrl:null,
+          thumbnail:null          
         }
       ]
     }

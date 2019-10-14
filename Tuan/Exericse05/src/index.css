@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container{
+  width: 100%;
+  border: 2px solid #eeeeee;
+  height: fit-content;
+  padding: 0 5%;
+}
+
+.product-card {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+  padding: 5px;
+  margin: 10px;
+  border: 1px solid #eeeeee;
+  width: 200px;
+  height: 200px;
+  float: left;
+}
+
+.card-header{
+  font-weight: bold;
+  color: darkblue;
+}
+
+button.add{
+  background: #eee000
+}
+
+button.remove{
+  background: #ee0000
+}
+
+.card-body img{
+  width: 150px;
+  margin: 10px 20px;
+}
+
+.cart-table td {
+  border: 1px solid darkblue;
+}
+
+.cart-table td:last-child{
+  text-align: right;
+}
+
+.cart-table td img{
+  width: 100px;
+}

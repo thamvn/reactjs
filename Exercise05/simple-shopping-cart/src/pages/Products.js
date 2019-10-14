@@ -45,7 +45,7 @@ class Products extends Component{
                 }
             }
 
-            window.localStorage.setItem('cart', JSON.stringify(newCart));         
+            window.localStorage.setItem('carts', JSON.stringify(newCart));         
             updateList(false);
             alert('Item is removed from cart.');
         }else{

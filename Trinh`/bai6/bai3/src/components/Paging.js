@@ -20,7 +20,8 @@ class Paging extends React.Component {
     }
 
     componentDidMount() {
-        this.divideIntoPages();
+        if (this.state.itemList) 
+            this.divideIntoPages();
     }
 
     divideIntoPages() {
@@ -57,7 +58,7 @@ class Paging extends React.Component {
             return (
                 <div>
                     {(this.state.pageList[this.state.currentPage - 1].content.map(el => {
-                        return <ItemEntry item={el} renderButton={this.props.renderButton} onClickDelete={this.props.onClickDelete} onClickEdit={this.props.onClickEdit} key={Math.random()}/>
+                        return <ItemEntry item={el} renderButton={this.props.renderButton} onClickDelete={this.props.onClickDelete} onClickEdit={this.props.onClickEdit} key={Math.random()} />
                     }))}
                 </div>
             )

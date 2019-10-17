@@ -8,7 +8,7 @@ class ItemEntry extends React.Component {
         this.state = {
             item: this.props.item,
             renderButton: this.props.renderButton,
-            isExistInCart: false
+            isExistInCart: this.props.isExistInCart
         }
 
         this.onClickEdit = this.props.onClickEdit.bind(this);
@@ -17,30 +17,34 @@ class ItemEntry extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({isExistInCart: CheckoutService.isExistInCart(this.state.item.id)})
+        CheckoutService.isExistInCart(this.state.item.id).then(rs => {
+            this.setState({isExistInCart: rs})
+        })
     }
 
     onClickButton(e) {
         if (this.state.isExistInCart === false) {
-            CheckoutService.addToCart(this.state.item);
-            this.setState({isExistInCart: true});
+            CheckoutService.addToCart(this.state.item).then(rs => {
+                this.setState({isExistInCart: true});
+            });
         }
         else {
-            CheckoutService.removeFormCart(this.state.item.id);
-            this.setState({isExistInCart: false});
+            CheckoutService.removeFromCart(this.state.item.id).then(rs => {
+                this.setState({isExistInCart: false});
+            });   
         }
     }
 
     onClickViewImage(e) {
         e.preventDefault();
-        window.open('http://localhost:9091/public/item-images/' + this.state.item.image, "_blank")
+        window.open('http://localhost:9091/items/image/' + this.state.item.image, "_blank")
     }
     
     render() {
         return(
             <div>
                 {this.state.item.name} - Price: {this.state.item.price} USD
-                <img margin="5px" src={'http://localhost:9091/public/item-images/thumb-' + this.state.item.image} alt={this.state.item.name} /> 
+                <img margin="5px" src={'http://localhost:9091/items/image/thumb-' + this.state.item.image} alt={this.state.item.name} /> 
                 {(this.state.renderButton) ? 
                     (<button classname="btn btn-default" onClick={e => this.onClickButton(this.state.item.id, e)}>
                         {(this.state.isExistInCart === false) ? 'Add To Cart' : 'Remove From Cart'}</button>) :

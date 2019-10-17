@@ -4,7 +4,7 @@ const thumb = require('node-thumbnail').thumb;
 module.exports = function(app) {
     let frontendDir = path.join(__dirname, '../bai3/public');
 
-    app.route('/addItem')
+    app.route('/add')
         .post((req, res) => {
             try {
                 if(!req.files) {

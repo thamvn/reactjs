@@ -21,10 +21,16 @@ class Items extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-            itemList: ItemService.getListItems(),
-            checkoutList: CheckoutService.getCart(),
-            totalPrice: CheckoutService.getTotalPrice()
+        ItemService.getListItems().then(rs1 => {
+            CheckoutService.getCart().then(rs2 => {
+                CheckoutService.getTotalPrice().then(rs3 => {
+                    this.setState({
+                        itemList: rs1,
+                        checkoutList: rs2,
+                        totalPrice: rs3
+                    })
+                })
+            })
         })
     }
 
@@ -34,19 +40,21 @@ class Items extends React.Component {
     }
 
     onSortName(e) {
-        let tmpList = ItemService.getListItems();
-        tmpList = (this.state.nameSortState === 'asc') ? 
-            (tmpList.sort((a,b) => { return (a.name == b.name) ? 0 : ((a.name > b.name) ? 1 : -1 )})) :
-            (tmpList.sort((a,b) => { return (a.name == b.name) ? 0 : ((a.name < b.name) ? 1 : -1 )}));
-        this.setState({itemList: tmpList, nameSortState: (this.state.nameSortState === 'asc') ? ('desc') : ('asc')})
+        ItemService.getListItems().then(tmpList => {
+            tmpList = (this.state.nameSortState === 'asc') ? 
+                (tmpList.sort((a,b) => { return (a.name == b.name) ? 0 : ((a.name > b.name) ? 1 : -1 )})) :
+                (tmpList.sort((a,b) => { return (a.name == b.name) ? 0 : ((a.name < b.name) ? 1 : -1 )}));
+            this.setState({itemList: tmpList, nameSortState: (this.state.nameSortState === 'asc') ? ('desc') : ('asc')})
+        });
     }
 
     onSortPrice(e) {
-        let tmpList = ItemService.getListItems();
-        tmpList = (this.state.priceSortState === 'asc') ? 
-            (tmpList.sort((a,b) => { return (a.price == b.price) ? 0 : ((a.price > b.price) ? 1 : -1 )})) :
-            (tmpList.sort((a,b) => { return (a.price == b.price) ? 0 : ((a.price < b.price) ? 1 : -1 )}));
-        this.setState({itemList: tmpList, priceSortState: (this.state.priceSortState === 'asc') ? ('desc') : ('asc')})
+        ItemService.getListItems().then(tmpList => {
+            tmpList = (this.state.priceSortState === 'asc') ? 
+                (tmpList.sort((a,b) => { return (a.price == b.price) ? 0 : ((a.price > b.price) ? 1 : -1 )})) :
+                (tmpList.sort((a,b) => { return (a.price == b.price) ? 0 : ((a.price < b.price) ? 1 : -1 )}));
+            this.setState({itemList: tmpList, priceSortState: (this.state.priceSortState === 'asc') ? ('desc') : ('asc')})
+        });
     }
 
     render() {

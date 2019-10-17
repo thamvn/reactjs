@@ -1,0 +1,36 @@
+CREATE TABLE items (
+	id int NOT NULL AUTO_INCREMENT,
+	name varchar(255) NOT NULL,
+	price decimal NOT NULL,
+	image varchar(255),
+	PRIMARY KEY (id)	
+);
+
+CREATE TABLE cart (
+	id int NOT NULL AUTO_INCREMENT,
+	item_id int NOT NULL,
+	item_name varchar(255) NOT NULL,
+	item_price decimal NOT NULL,
+	item_image varchar(255),
+	PRIMARY KEY (id)	
+);
+
+POST: http://localhost:9091/items/add
+{
+    "name": "Mũ bảo hiểm 2",
+    "price": 15.45,
+    "image": null
+}
+
+GET: http://localhost:9091/items/
+GET: http://localhost:9091/items/:id
+GET: http://localhost:9091/items/image/:imageName
+POST: http://localhost:9091/items/edit/:id
+{
+        "name": "Mũ bảo hiểm 3",
+        "price": 150.45,
+        "image": null
+}
+
+GET: http://localhost:9091/items/delete/:id
+

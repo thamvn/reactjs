@@ -15,9 +15,13 @@ class Checkout extends React.Component {
     }
 
     componentDidMount(){
-        this.setState({
-            checkoutList: CheckoutService.getCart(),
-            totalPrice: CheckoutService.getTotalPrice()
+        CheckoutService.getCart().then(rs2 => {
+            CheckoutService.getTotalPrice().then(rs3 => {
+                this.setState({
+                    checkoutList: rs2,
+                    totalPrice: rs3
+                })
+            })
         })
     }
 
@@ -42,8 +46,8 @@ class Checkout extends React.Component {
                         <tbody>     
                             {this.state.checkoutList.map((el) =>
                                 <tr key={el.id}>
-                                    <td>{el.name}</td>
-                                    <td>{el.price} USD</td>
+                                    <td>{el.item_name}</td>
+                                    <td>{el.item_price} USD</td>
                                 </tr>
                             )}
                         </tbody>

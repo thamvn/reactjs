@@ -1,51 +1,49 @@
-export const CheckoutService = {
-    getCart,
-    addToCart,
-    removeFormCart,
-    isExistInCart,
-    getTotalPrice
-}
+let mySqlConnection;
 
-function getCart(){
-    let cart = JSON.parse(window.localStorage.getItem('cart'));
-
-    return cart || [];
-}
-
-function addToCart(item){
-    let cart = this.getCart();
-
-    cart.push(item);
-    window.localStorage.setItem('cart', JSON.stringify(cart));
-    return cart;
-}
-
-
-function removeFormCart(itemId){
-    let cart = getCart();
-    let newCart = [];
-    for(let i = 0; i < cart.length; i++){
-        if(cart[i].id !== itemId){
-            newCart.push(cart[i]);
-        }
+export default class CheckoutService {
+    constructor(injectedSqlConnection) {
+        mySqlConnection = injectedSqlConnection;
     }
 
-    window.localStorage.setItem('cart', JSON.stringify(newCart));
-    return newCart;
-}
+    getCart(callback){
+        let selectQuery = `SELECT * FROM cart;`;
 
-function isExistInCart(id){
-    let cart = getCart();
-
-    return cart.findIndex(item => { return item.id === id }) >= 0;
-}
-
-function getTotalPrice() {
-    let cart = getCart(), ret = 0;
+        mySqlConnection.query(selectQuery, [], rs => {
+            callback(rs);
+        })
+    }
     
-    for (var el in cart) {
-        ret += cart[el].price;
-    }
+    addToCart(item, callback){
+        let insertQuery = `INSERT INTO cart(item_id, item_name, item_price, item_image) VALUES (?,?,?,?);`;
 
-    return ret;
+        mySqlConnection.query(insertQuery, [item.id, item.name, item.price, (!item.image) ? null : item.image], rs => {
+            callback(rs);
+        });
+    }
+    
+    
+    removeFromCart(itemId, callback){
+        let deleteQuery = `DELETE FROM cart WHERE item_id = ?;`;
+
+        mySqlConnection.query(deleteQuery, [itemId], rs => {
+            callback(rs);
+        })
+    }
+    
+    isExistInCart(itemId, callback){
+        let selectQuery = `SELECT * FROM cart WHERE item_id = ?`;
+        mySqlConnection.query(selectQuery, [itemId], rs => {
+            if (!rs.results || rs.results.length === 0)
+                callback({results: false, error: null});
+            else callback({results: true, error: null});
+        })
+    }
+    
+    getTotalPrice(callback) {
+        let selectQuery = `SELECT SUM(item_price) as totalPrice FROM cart;`;
+        
+        mySqlConnection.query(selectQuery, [], rs => {
+            callback(rs);
+        })
+    }
 }

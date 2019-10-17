@@ -1,79 +1,59 @@
-import {CheckoutService} from './index';
+const path = require('path');
+const thumb = require('node-thumbnail').thumb;
 
-export const ItemService = {
-    getListItems,
-    addNewItem,
-    editItem,
-    deleteItem,
-    getItemById
-}
+let mySqlConnection;
 
-function getListItems() {
-    let itemList = JSON.parse(window.localStorage.getItem('items'));
-
-    if(!itemList || itemList.length === 0){
-        itemList = [];
-        for(var i = 0; i < 50; i++){
-            itemList.push({id: i, 
-                            name: `Mũ bảo hiểm ${i+1}`,
-                            price: 10*i,
-                            image: `mu${(i%3)+1}.${(i%3 === 2) ? ('png') : ('jpg')}`
-                        });
-        }
-        window.localStorage.setItem('items', JSON.stringify(itemList));
+export default class ItemService {
+    constructor(injectedSqlConnection) {
+        mySqlConnection = injectedSqlConnection;
     }
-    return itemList;
-}
 
-function addNewItem(item) {
-    let itemList = this.getListItems();
-    item.id = itemList.length + 1;
-    item.price = parseFloat(item.price);
-    itemList.push(item);
-    window.localStorage.setItem('items', JSON.stringify(itemList));
-    alert('Add new item successfully');
-}
+    getListItems(callback) {
+        let selectQuery = `SELECT * FROM items`;
 
-function editItem(itemId, item) {
-    let itemList = this.getListItems();
-    let tmpItemIdx = itemList.findIndex(el => {return el.id == itemId});
-
-    console.log(itemId);
-    console.log(item);
-
-    itemList[tmpItemIdx].name = (item.name) ? (item.name) : (itemList[tmpItemIdx].name);
-    itemList[tmpItemIdx].price = (item.price) ? (item.price) : (itemList[tmpItemIdx].price);
-    itemList[tmpItemIdx].image = (item.image) ? (item.image) : (itemList[tmpItemIdx].image);
-
-    console.log(itemList[tmpItemIdx]);
-
-    window.localStorage.setItem('items', JSON.stringify(itemList));
-
-    if (CheckoutService.isExistInCart(itemId)) {
-        CheckoutService.removeFormCart(itemId);
-        CheckoutService.addToCart(item);
+        mySqlConnection.query(selectQuery, [], rs => {
+            callback(rs);
+        })
     }
-    alert(`Edit item ${item.name} successfully`);
-}
+    
+    addNewItem(item, callback) {
+        let insertQuery = `INSERT INTO items (name, price, image) VALUES (?,?,?);`
 
-function deleteItem(itemId) {
-    let itemList = this.getListItems();
-    // console.log(JSON.stringify(itemList));
-    let newItemList = [];
-    for(let i = 0; i < itemList.length; i++){
-        if(itemList[i].id != itemId){
-            newItemList.push(itemList[i]);
-        }
+        mySqlConnection.query(insertQuery, [item.name, item.price, (item.image) ? (item.image) : (null)], rs => {
+            callback(rs);
+        })
     }
-    window.localStorage.setItem('items', JSON.stringify(newItemList));
-    // console.log(JSON.stringify(newItemList));
-    CheckoutService.removeFormCart(itemId);
-    alert('Delete item successfully');
-}
+    
+    editItem(itemId, item, callback) {
+        let selectQuery = `SELECT * FROM items WHERE id = ?;`;
+        let updateQuery = `UPDATE items SET name = ?, price = ?, image = ? WHERE id = ?;`;
 
-function getItemById(itemId) {
-    let itemList = this.getListItems();
-    let ret = itemList.find(el => {return el.id == itemId;});
+        mySqlConnection.query(selectQuery, [itemId], selectRs => {
+            console.log(selectRs.results);
+            let tmpItem = selectRs.results;
+            mySqlConnection.query(updateQuery, 
+                [(item.name) ? (item.name) : (tmpItem.name),
+                (item.price) ? (item.price) : (tmpItem.price),
+                (item.image) ? (item.image) : (tmpItem.image),
+                itemId], rs => {
+                    callback(rs);
+            })
+        })
+    }
+    
+    deleteItem(itemId, callback) {
+        let deleteQuery = `DELETE FROM items WHERE id = ?;`
 
-    return ret;
+        mySqlConnection.query(deleteQuery, [itemId], rs => {
+            callback(rs);
+        })
+    }
+    
+    getItemById(itemId, callback) {
+        let selectQuery = `SELECT * FROM items WHERE id = ?;`;
+
+        mySqlConnection.query(selectQuery, [itemId], rs => {
+            callback(rs);
+        })
+    }
 }

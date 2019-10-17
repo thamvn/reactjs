@@ -36,17 +36,23 @@ class AddItem extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({itemList: ItemService.getListItems()})
+        ItemService.getListItems().then(rs => {
+            this.setState({itemList: rs})
+        })   
     }
 
     onNameChange(e) {
         let tmp = validateName(e.target.value);
-        this.setState({itemList: ItemService.getListItems(), name : tmp.data, notInputYet: false, isNameValidated: tmp.result});
+        ItemService.getListItems().then(rs => {
+            this.setState({itemList: rs, name : tmp.data, notInputYet: false, isNameValidated: tmp.result})
+        })
     }
 
     onPriceChange(e) {
         let tmp = validatePrice(e.target.value);
-        this.setState({itemList: ItemService.getListItems(), price: tmp.data, notInputYet: false, isPriceValidated: tmp.result});
+        ItemService.getListItems().then(rs => {
+            this.setState({itemList: rs, price: tmp.data, notInputYet: false, isPriceValidated: tmp.result})
+        })
     }
 
     clearInput() {
@@ -72,7 +78,7 @@ class AddItem extends React.Component {
         const data = new FormData();
         data.append('image', tmpImage)
 
-        axios.post('/addItem', data).then((response) => {
+        axios.post('/items/image/add', data).then((response) => {
             if (response.data.status === false)
                 alert('Upload image failed');
             else {
@@ -87,14 +93,20 @@ class AddItem extends React.Component {
         let item = {name: name, price: price};
         item.selected = false;
         item.image = imageName;
-        ItemService.addNewItem(item);
-        this.setState({itemList: ItemService.getListItems()});
+        ItemService.addNewItem(item).then(rs1 => {
+            ItemService.getListItems().then(rs => {
+                this.setState({itemList: rs})
+            })   
+        });
       }
 
     onClickDelete(e) {
         e.preventDefault();
-        ItemService.deleteItem(e.target.value);
-        this.setState({itemList: ItemService.getListItems(), key: Math.random()});
+        ItemService.deleteItem(e.target.value).then(rs1 => {
+            ItemService.getListItems().then(rs => {
+                this.setState({itemList: rs, key: Math.random()})
+            })   
+        });
     }
 
     onClickEdit(e) {
@@ -102,19 +114,21 @@ class AddItem extends React.Component {
     }
 
     onSortName(e) {
-        let tmpList = ItemService.getListItems();
-        tmpList = (this.state.nameSortState === 'asc') ? 
-            (tmpList.sort((a,b) => { return (a.name == b.name) ? 0 : ((a.name > b.name) ? 1 : -1 )})) :
-            (tmpList.sort((a,b) => { return (a.name == b.name) ? 0 : ((a.name < b.name) ? 1 : -1 )}));
-        this.setState({itemList: tmpList, nameSortState: (this.state.nameSortState === 'asc') ? ('desc') : ('asc')})
+        ItemService.getListItems().then(tmpList => {
+            tmpList = (this.state.nameSortState === 'asc') ? 
+                (tmpList.sort((a,b) => { return (a.name == b.name) ? 0 : ((a.name > b.name) ? 1 : -1 )})) :
+                (tmpList.sort((a,b) => { return (a.name == b.name) ? 0 : ((a.name < b.name) ? 1 : -1 )}));
+            this.setState({itemList: tmpList, nameSortState: (this.state.nameSortState === 'asc') ? ('desc') : ('asc')})
+        });
     }
 
     onSortPrice(e) {
-        let tmpList = ItemService.getListItems();
-        tmpList = (this.state.priceSortState === 'asc') ? 
-            (tmpList.sort((a,b) => { return (a.price == b.price) ? 0 : ((a.price > b.price) ? 1 : -1 )})) :
-            (tmpList.sort((a,b) => { return (a.price == b.price) ? 0 : ((a.price < b.price) ? 1 : -1 )}));
-        this.setState({itemList: tmpList, priceSortState: (this.state.priceSortState === 'asc') ? ('desc') : ('asc')})
+        ItemService.getListItems().then(tmpList => {
+            tmpList = (this.state.priceSortState === 'asc') ? 
+                (tmpList.sort((a,b) => { return (a.price == b.price) ? 0 : ((a.price > b.price) ? 1 : -1 )})) :
+                (tmpList.sort((a,b) => { return (a.price == b.price) ? 0 : ((a.price < b.price) ? 1 : -1 )}));
+            this.setState({itemList: tmpList, priceSortState: (this.state.priceSortState === 'asc') ? ('desc') : ('asc')})
+        });
     }
 
     render() {

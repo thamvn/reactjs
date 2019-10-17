@@ -31,8 +31,9 @@ class EditItem extends React.Component {
 
     componentDidMount() {
         const id = this.props.match.params.itemId;
-        let selectedItem = ItemService.getItemById(id);
-        this.setState({ price: selectedItem.price, item: selectedItem, name: selectedItem.name, imageName: selectedItem.image});
+        ItemService.getItemById(id).then(rs => {
+            this.setState({ price: rs[0].price, item: rs[0], name: rs[0].name, imageName: rs[0].image});
+        });
     }
     
     onNameChange(e) {
@@ -68,7 +69,7 @@ class EditItem extends React.Component {
         const data = new FormData();
         data.append('image', tmpImage)
 
-        axios.post('/addItem', data).then((response) => {
+        axios.post('/items/image/add', data).then((response) => {
             if (response.data.status === false)
                 alert('Upload image failed');
             else {
@@ -89,8 +90,9 @@ class EditItem extends React.Component {
             price: this.state.price,
             image: this.state.imageName
         };
-        ItemService.editItem(e.target.value, tempItem);
-        this.props.history.push('/add');
+        ItemService.editItem(e.target.value, tempItem).then(rs => {
+            this.props.history.push('/add');
+        });
     }
 
     render() {
@@ -116,7 +118,7 @@ class EditItem extends React.Component {
                             (<div className='label' style={{ color: 'red', fontSize: '10px' }}>Price must be a valid decimal in range of (0, 1000]</div>)
                             : (<div></div>)
                     ) : 
-                    (<div className='label' style={{ color: 'green', fontSize: '10px' }}>{stringToWords(this.state.price)} dollars</div>)}
+                    (<div className='label' style={{ color: 'green', fontSize: '10px' }}>{stringToWords(this.state.price.toString())} dollars</div>)}
 
                 <div className='label'>Image</div>
 
@@ -133,7 +135,7 @@ class EditItem extends React.Component {
                                 maxHeight: 100,
                             }}/>
                         </div>) :
-                        (<div></div>)
+                        (<div><img margin="5px" src={'http://localhost:9091/items/image/thumb-' + this.state.item.image} alt={this.state.item.name} /></div>)
                     }
                 </div>
 

@@ -1,51 +1,65 @@
+import axios from 'axios';
+
 export const CheckoutService = {
     getCart,
     addToCart,
-    removeFormCart,
+    removeFromCart,
     isExistInCart,
     getTotalPrice
 }
 
 function getCart(){
-    let cart = JSON.parse(window.localStorage.getItem('cart'));
-
-    return cart || [];
+    return axios.get('/checkout/')
+        .then(rs => {
+            return rs.data.results;
+        })
+        .catch(err => {
+            console.log('err: ');
+            console.log(err);
+        })
 }
 
 function addToCart(item){
-    let cart = this.getCart();
-
-    cart.push(item);
-    window.localStorage.setItem('cart', JSON.stringify(cart));
-    return cart;
+    return axios.post('/checkout/add', item)
+        .then(rs => {
+            return rs.data.results;
+        })
+        .catch(err => {
+            console.log('err: ');
+            console.log(err);
+        })
 }
 
 
-function removeFormCart(itemId){
-    let cart = getCart();
-    let newCart = [];
-    for(let i = 0; i < cart.length; i++){
-        if(cart[i].id !== itemId){
-            newCart.push(cart[i]);
-        }
-    }
-
-    window.localStorage.setItem('cart', JSON.stringify(newCart));
-    return newCart;
+function removeFromCart(itemId){
+    return axios.get('/checkout/delete/' + itemId)
+        .then(rs => {
+            return rs.data.results;
+        })
+        .catch(err => {
+            console.log('err: ');
+            console.log(err);
+        })
 }
 
-function isExistInCart(id){
-    let cart = getCart();
-
-    return cart.findIndex(item => { return item.id === id }) >= 0;
+function isExistInCart(itemId){
+    return axios.get('/checkout/incart/' + itemId)
+        .then(rs => {
+            return rs.data.results;
+        })
+        .catch(err => {
+            console.log('err: ');
+            console.log(err);
+        })
 }
 
 function getTotalPrice() {
-    let cart = getCart(), ret = 0;
-    
-    for (var el in cart) {
-        ret += cart[el].price;
-    }
-
-    return ret;
+    return axios.get('/checkout/total')
+        .then(rs => {
+            return rs.data.results;
+        })
+        .catch(err => {
+            console.log('err: ');
+            console.log(err);
+        })
 }

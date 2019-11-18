@@ -10,6 +10,9 @@ var productController=require('../controllers/product.controller')
 var cartController = require('../controllers/cart.controller')
 /* GET home page. */
 router.get('/',productController.index);
-router.get('/cart',cartController.cart)
+router.get('/cart',cartController.index)
+
+router.post('/cart/add',cartController.add);
+router.delete('/cart/remove/:name',cartController.remove);
 
 module.exports = router;

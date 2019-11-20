@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 const products = require('./routers/api/products');
 const carts = require('./routers/api/carts');
+const users = require('./routers/api/users');
+const account = require('./routers/api/signin');
 
 const app = express();
 
@@ -21,17 +23,13 @@ mongoose.connect(db)
 //Use routes
 app.use('/api/products',products)
 app.use('/api/cart',carts)
+app.use('/api/users',users)
+app.use('/api/account',account)
+
+
 const port = process.env.PORT || 5000;
 
 app.listen(port,()=>console.log(`Server started on port ${port}`));
-
-
-
-
-
-
-
-
 
 // app.get('/',(req,res)=>{
 //     res.send("this is home page")

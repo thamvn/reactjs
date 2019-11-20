@@ -15,7 +15,7 @@ function getCart(){
 function addToCart(item){
     // let cart = this.getCart();
     // cart.push(item);
-    axios.post('/api/cart/add', item)
+    axios.post('http://localhost:5000/api/cart/add', item)
     .then(res=>{return res.data})
     .catch(function (error) {
       console.log(error);

@@ -127,25 +127,21 @@ export default class newProducts extends Component{
         }
          else if(this.state.errorName === "" && this.state.errorPrice === "")
           {
-            // e.preventDefault();
-            // let id = (products[products.length-1].id +1);
-            // let priceNum = Number(this.state.price);
-            // let objAdd = {
-            //   id : id,
-            //   name : this.state.name,
-            //   price : priceNum,
-            //   status : false
-            // }
-            let list = [...this.state.products];
+            // let products = [...this.state.products];
+
+            e.preventDefault();
+            let priceNum = Number(this.state.price);
+            let objAdd = {
+              name : this.state.name,
+              price : priceNum,
+              isAdded : false
+            }
             document.getElementById("inputName").value="";
             document.getElementById("inputPrice").value="";
             // let list = products.slice();
             // list.push(objAdd);
             // localStorage.setItem("products",JSON.stringify(list));
-              this.setState({
-                products : list
-              })
-              itemService.addNewItem(list);
+              itemService.addNewItem(objAdd);
             alert("Saved");
             this.props.history.push('/base/tables');
           }

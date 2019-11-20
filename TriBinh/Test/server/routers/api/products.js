@@ -25,5 +25,15 @@ router.post('/add',(req,res)=>{
                     .catch(err=>res.status(500).send(err))
 });
 
+router.delete('/remove/:id',(req,res)=>{
+    var id=req.params.id;
+
+    product.findById(id).then(
+        item => {
+            item.remove().then(product=>res.json(product))
+                .catch(err=>res.status(400).send(err))
+        }
+    ).catch(err=>res.status(500).send("Product not exist"))
+});
 
 module.exports = router;

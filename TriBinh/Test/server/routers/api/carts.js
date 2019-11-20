@@ -33,7 +33,6 @@ router.delete('/remove/:id',(req,res)=>{
          return res.status(500).send();
         }
         return res.status(200).send();
- 
     })
     // cart.findById(id).then(
     //     product=>{

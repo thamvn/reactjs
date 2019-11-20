@@ -17,10 +17,9 @@ const defaultProps = {};
 class DefaultHeader extends Component {
   constructor(props) {
     super(props);
-    const account = JSON.parse(localStorage.getItem("userInfo")) || [];
+    const account = JSON.parse(localStorage.getItem("user"));
     this.state={
-      username:account.username,
-      password:account.password,
+      username:account.name
     }
   }
   

@@ -7,9 +7,13 @@ class Register extends Component {
     this.state={
       username:"",
       password:"",
+      displayname:'',
       phonenumber:'',
+      status:''
     }
   }
+
+  
 
   render() {
     return (
@@ -52,6 +56,14 @@ class Register extends Component {
                             <i className="icon-phone"></i>
                           </InputGroupText>
                       </InputGroupAddon>
+                      <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="icon-user"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input type="text" placeholder="Display Name" autoComplete="displayname" />
+                    </InputGroup>
                       <Input type="text" placeholder="Phone number" autoComplete="phone-number" />
                     </InputGroup>
                     <Button color="success" block>Create Account</Button>

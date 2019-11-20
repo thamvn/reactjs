@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
 import { cartService } from '../../services/cartservices';
 import { itemService } from '../../services/itemservices';
 import { userService } from '../../services/userservices';
@@ -10,11 +10,10 @@ import UserCard from '../../component/UserCard';
 class Tables extends Component {
   constructor(props) {
     super(props);
-    let users = userService.getUsers();
     this.state = {
       products:[],
       cart: [],
-      users: users,
+      users: [],
     }
   }
 
@@ -48,6 +47,18 @@ class Tables extends Component {
         this.setState({
           products:list 
         })
+        console.log("1:",list)
+      }
+    ).catch(function(err){
+      console.log(err);
+    })
+
+    userService.getUsers().then(
+      (list)=>{
+        this.setState({
+          users:list 
+        })
+        console.log("2:",list)
       }
     ).catch(function(err){
       console.log(err);
@@ -64,7 +75,7 @@ class Tables extends Component {
           this.setState({
             products: list
           })
-      cartService.addToCart(list[i]);
+          cartService.addToCart(list[i]);
          }
 
         else {
@@ -97,20 +108,24 @@ class Tables extends Component {
   }
 
   deleteItem = (id) => {
-    let products = [...this.state.products];
-    let item = products.findIndex(item => item.id === id);
-    console.log(id)
-    console.log(products[id-1].isAdded)
-    if(products[id-1].isAdded){
-     alert(`Sorry!! This ${products[id-1].name} is existed in cart, you can't delete it!!`);
-    }
-   else{
-    products.splice(item,1);
-    localStorage.setItem("products", JSON.stringify(products));
-      this.setState({
-        products : products,
+  //   let products = [...this.state.products];
+  //   let item = products.findIndex(item => item.id === id);
+  //   console.log(id)
+  //   console.log(products[id-1].isAdded)
+  //   if(products[id-1].isAdded){
+  //    alert(`Sorry!! This ${products[id-1].name} is existed in cart, you can't delete it!!`);
+  //   }
+  //  else{
+  //   products.splice(item,1);
+  //   localStorage.setItem("products", JSON.stringify(products));
+  //     this.setState({
+  //       products : products,
+  //     })
+  //  }
+        this.setState({
+        products : this.state.products,
       })
-   }
+      itemService.deleteItem(id);
   }
 
   render() {

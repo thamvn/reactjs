@@ -1,52 +1,71 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { userService } from '../../services/userservices';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state={
-      username:'Binh',
-      password:'1',
+      email:'',
+      password:'',
       message:''
     }
-    localStorage.setItem('users',JSON.stringify(this.state))
   }
 
   onUserHandler=(e)=>{
     let input = e.target.value;
     if(!input){
-      this.setState({message:"Username must be required!!"})
+      this.setState({message:"Username is required!!"})
     }
     else{
-      this.setState({username:input,message:""});
+      this.setState({email:input,message:""});
     }
   }
 
   onPasswordHandler=(e)=>{
     let input = e.target.value;
     if(!input){
-      this.setState({message:"Password must be required!!"})
+      this.setState({message:"Password is required!!"})
     }
     this.setState({password:input,message:""});
   }
 
   onSubmit = (e) => {
       e.preventDefault();
-      let account = JSON.parse(localStorage.getItem('users'));
-      console.log("1: ", account)
-    const credentials = {username: this.state.username, password: this.state.password};
-    console.log("2: ", credentials);
-        if(account.username === credentials.username && account.password === credentials.password){
-          console.log(account.username===credentials.username)
-            this.props.history.push('/dashboard');
-          this.setState({message: ""});
-          localStorage.setItem("userInfo", JSON.stringify(credentials));
-        }
-        else{
-          console.log(account.username===credentials.username)
-          this.setState({message: "Wrong name or password!!"});
-        }
+      let users = {
+        email: this.state.email,
+        password: this.state.password
+      }
+      userService.loginUser(users)
+                .then(res=>{
+                  this.setState({
+                    message:res.message
+                  });
+                  if(res.token){
+                    localStorage.setItem('token',res.token)
+                    localStorage.setItem('user',JSON.stringify(res.user))
+                    this.props.history.push('/dashboard');
+
+                  }
+                })
+                .catch(err=>console.log(err))
+
+    //   let account = JSON.parse(localStorage.getItem('users'));
+    //   console.log("1: ", account)
+    // const credentials = {username: this.state.username, password: this.state.password};
+    // console.log("2: ", credentials);
+    //     if(account.username === credentials.username && account.password === credentials.password){
+    //       console.log(account.username===credentials.username)
+    //         this.props.history.push('/dashboard');
+    //       this.setState({message: ""});
+    //       localStorage.setItem("userInfo", JSON.stringify(credentials));
+    //     }
+    //     else{
+    //       console.log(account.username===credentials.username)
+    //       this.setState({message: "Wrong name or password!!"});
+    //     }
+
     };
 
   render() {
@@ -71,7 +90,7 @@ class Login extends Component {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input onChange={(e)=>this.onUserHandler(e)} type="text" placeholder="Username" autoComplete="username" required />
+                        <Input onChange={(e)=>this.onUserHandler(e)} type="email" placeholder="Email" autoComplete="username" required />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">

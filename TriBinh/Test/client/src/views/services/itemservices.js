@@ -42,7 +42,7 @@ function getProducts(){
     //     }
     // return products;
     // }
-    return axios.get('/api/products')
+    return axios.get('http://localhost:5000/api/products')
         .then(res => res.data)
         .catch(err =>console.log(err));
     // fetch.get('api/products')
@@ -50,23 +50,27 @@ function getProducts(){
     // .then(p => console.log(p))
 }
 
-function addNewItem(item){
+function addNewItem(newItem){
 //     let products = this.getProducts();
 //     newItem.id = products[products.length-1].id +1;
 //     newItem.price = Number(newItem.price);
 //     products.push(newItem);
 //   localStorage.setItem("products",JSON.stringify(products));
-    axios.post('http://localhost:5000/api/product/add',item)
+    axios.post('http://localhost:5000/api/products/add',newItem)
         .then(res =>{return res.data})
         .catch(err=>{return console.log(err)});
 }
 
 function deleteItem(id){
-    let products=this.getProducts();
-    // let newProducts=products.filter(product=>product.id!==id);
-    let newProducts = products.findIndex(item => item.id === id);
-    products.splice(newProducts,1);
-    return newProducts;
+    // let products=this.getProducts();
+    // // let newProducts=products.filter(product=>product.id!==id);
+    // let newProducts = products.findIndex(item => item.id === id);
+    // products.splice(newProducts,1);
+    // return newProducts;
+
+    axios.delete(`http://localhost:5000/api/products/remove/${id}`)
+        .then(res=>console.log(res.data))
+        .catch(err=>{return console.log(err)})
 }
 
 function editItem(id){

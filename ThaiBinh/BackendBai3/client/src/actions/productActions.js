@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { GET_PRODUCTS,ADD_PRODUCT,DELETE_PRODUCT,PRODUCTS_LOADING,ADD_TO_CART,GET_PRODUCT_BY_ID,EDIT_PRODUCT } from "./type";
-
+import {tokenConfig} from './authActions'
+import {returnErrors} from './errorActions'
 
 export const getProducts=()=> dispatch =>{
    dispatch(setProductsLoading());
@@ -11,18 +12,21 @@ export const getProducts=()=> dispatch =>{
                 payload:res.data
             })
         )
+        .catch(err=>dispatch(returnErrors(err.response.data,err.response.status)))
 }
-export const deleteProduct=(id)=>dispatch=>{
-   axios.delete(`/api/products/${id}`)
+export const deleteProduct=(id)=>(dispatch,getState)=>{
+
+   axios.delete(`/api/products/${id}`,tokenConfig(getState))
         .then(res=>
             dispatch({
                 type:DELETE_PRODUCT,
                 payload:id
             })
         )
+        .catch(err=>dispatch(returnErrors(err.response.data,err.response.status)))
 }
-export const addProduct=(newProduct)=>dispatch=>{
-    axios.post('/api/products',newProduct)
+export const addProduct=(newProduct)=>(dispatch,getState)=>{
+    axios.post('/api/products',newProduct,tokenConfig(getState))
         .then(res=>
             dispatch({
                 type:ADD_PRODUCT,
@@ -55,9 +59,9 @@ export const addToCart=(product)=>dispatch=>{
         
 
  }
- export const editProduct=(product)=>dispatch=>{
+ export const editProduct=(product)=>(dispatch,getState)=>{
 
-    axios.put(`/api/products/${product._id}`,product)
+    axios.put(`/api/products/${product._id}`,product,tokenConfig(getState))
     .then(res=>
         dispatch({
             type:EDIT_PRODUCT,

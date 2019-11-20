@@ -1,5 +1,6 @@
 const  express=require('express');
 const router=express.Router();
+const auth=require('../../middleware/auth')
 
 //Product Model
 const Product=require('../../models/Product')
@@ -15,9 +16,9 @@ router.get('/',(req,res)=>{
 })
 //@route Post api/products
 //@des create new product
-//@access public
+//@access private
 
-router.post('/',(req,res)=>{
+router.post('/',auth,(req,res)=>{
     let newProduct=new Product({
         name:req.body.name,
         price:req.body.price,
@@ -29,8 +30,8 @@ router.post('/',(req,res)=>{
 })
 //@route Post api/products/:id
 //@des Delete a product
-//@access public
-router.delete('/:id',(req,res)=>{
+//@access private
+router.delete('/:id',auth,(req,res)=>{
     Product.findById(req.params.id)
     .then(
         (product)=>{
@@ -55,7 +56,10 @@ router.get('/:id',(req,res)=>{
         .catch(err=>console.log(err))
 
 });
-router.put('/:id',(req,res)=>{
+//@route PUT api/products/id
+// @des edit product by id
+//@access Private
+router.put('/:id',auth,(req,res)=>{
     Product.findById(req.params.id)
 
     .then(product=>{
@@ -68,5 +72,4 @@ router.put('/:id',(req,res)=>{
     
     .catch(err=>res.status(404).json({err}))
  });
-
 module.exports=router;

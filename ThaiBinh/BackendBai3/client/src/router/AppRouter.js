@@ -14,6 +14,7 @@ export default class AppRouter extends Component {
                     <Route path="/dashboard" component={App} />
                     <Route path='/edit/:id' component={EditProduct} />
                     <Route path="/cart" component={Cart} />
+                   
                 </Router>
             </div>
         )

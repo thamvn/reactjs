@@ -10,10 +10,11 @@ import {
 } from 'reactstrap'
 import { connect } from 'react-redux';
 import {getProducts,addToCart,getProductById} from '../actions/productActions';
+import {loadUser} from '../actions/authActions'
 
 class Store extends Component {
     componentDidMount(){
-        
+        this.props.loadUser();
         this.props.getProducts();
     }
     addToCart=(id)=>{
@@ -66,5 +67,5 @@ const mapStatetoProps=(state)=>({
     product:state.product,
     cart:state.cart
 })
-export default connect(mapStatetoProps,{getProducts,addToCart,getProductById
+export default connect(mapStatetoProps,{getProducts,loadUser,addToCart,getProductById
     })(Store)

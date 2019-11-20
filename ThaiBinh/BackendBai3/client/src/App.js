@@ -8,7 +8,11 @@ import {Provider} from 'react-redux'
 import store from './store';
 import ProductModal from './components/ProductModal'
 import {Container} from 'reactstrap'
+import {loadUser} from './actions/authActions'
 class App extends Component {
+  componentDidMount(){
+    store.dispatch(loadUser())
+  }
   
   handleEditClick=(id)=>{
     this.props.history.push(`./edit/${id}`)

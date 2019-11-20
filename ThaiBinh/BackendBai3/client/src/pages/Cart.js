@@ -6,8 +6,10 @@ import { Provider } from 'react-redux'
 import store from '../store';
 import { getCart,editCart,removeFromCart } from '../actions/cartActions'
 import { connect } from 'react-redux';
+import {loadUser} from '../actions/authActions'
 class Cart extends Component {
     componentDidMount() {
+        store.dispatch(loadUser())
         this.props.getCart();
 
     }

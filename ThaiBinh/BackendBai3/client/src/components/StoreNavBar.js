@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React,{Component,Fragment} from 'react';
 import {
     Collapse,
     Navbar,
@@ -9,8 +9,10 @@ import {
     NavLink,
     Container,
      } from 'reactstrap';
-
-
+import {connect} from 'react-redux'
+import Logout from './auth/Logout';
+import Login from './auth/Login';
+import RegisterModal from './auth/RegisterModal';
 class StoreNavBar extends Component {
     constructor(props) {
         super(props)
@@ -24,6 +26,36 @@ class StoreNavBar extends Component {
         })
     }
     render() {
+        const{isAuthenticated,user}=this.props.auth
+        console.log(user)
+        const authLinks=(
+            <Fragment>
+                
+                <NavItem>
+                    <span className="navbar-text mr-3">
+                        <strong>{user?`Welcome ${user.name}`:''}</strong>
+                    </span>
+                </NavItem>
+                <NavItem>
+                    <Logout />
+                </NavItem>
+
+            </Fragment>
+        );
+        const guestLinks=(
+            <Fragment>
+                <NavItem>
+                    
+                       <RegisterModal/>
+                    
+                </NavItem>
+
+                <NavItem>
+                    <Login />
+                </NavItem>
+                
+            </Fragment>
+        );
         return (
             <div>
                 <Navbar color="dark" dark expand="sm" className="mb-5">
@@ -32,19 +64,14 @@ class StoreNavBar extends Component {
                         <NavbarToggler onClick={this.toggle}/>
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="ml-auto" navbar>
-                                
+                                {isAuthenticated?authLinks:guestLinks}
                                 <NavItem>
                                     <NavLink href="/cart">
                                         Cart
-                                    </NavLink>
-                                   
+                                     </NavLink>
                                 </NavItem>
-                                <NavItem>
-                                    
-                                    <NavLink href="/dashboard">
-                                        Dashboard
-                                    </NavLink>
-                                </NavItem>
+                                
+                               
                             </Nav>
                         </Collapse>
                     </Container>
@@ -53,4 +80,7 @@ class StoreNavBar extends Component {
         )
     }
 }
-export default StoreNavBar
+const mapStateToProps=state=>({
+    auth:state.auth
+})
+export default connect(mapStateToProps,null)(StoreNavBar)

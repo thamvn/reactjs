@@ -16,8 +16,6 @@ class EditProduct extends Component {
     componentDidMount(){
         let id=(this.props.match.params.id)
         this.props.getProductById(id)
-          
-        
     }
    
     onChangeName=(e)=>{
@@ -46,7 +44,8 @@ class EditProduct extends Component {
     }
    
     render() {
-
+        const product=this.props.product.products
+        console.log(product)
         return (
            
             <div>

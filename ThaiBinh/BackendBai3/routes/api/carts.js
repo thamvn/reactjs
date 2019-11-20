@@ -1,6 +1,7 @@
 const express=require('express')
 const router=express.Router();
 const Cart=require('../../models/Cart')
+const auth=require('../../middleware/auth')
 
 
 //@route GET api/cart
@@ -29,7 +30,7 @@ router.delete('/:id',(req,res)=>{
     Cart.findById(req.params.id)
     .then((cart)=>{
         if (cart) cart.remove();
-        else res.status(400).send("k co item nay");    
+        else res.status(400).send("item is not exist");    
     })
     .then((product)=>res.json({product}))
     .catch(err=>console.log(err))
@@ -44,7 +45,7 @@ router.get('/:id',(req,res)=>{
         .catch(err=>console.log(err))
 
 });
-router.put('/:id',(req,res)=>{
+router.put('/:id',auth,(req,res)=>{
     Cart.findById(req.params.id)
     .then(product=>{
         if(product){

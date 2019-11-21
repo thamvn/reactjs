@@ -12,7 +12,9 @@ class RegisterModal extends Component {
         name: '',
         email: '',
         password: '',
-        msg: null
+        msg: null,
+        emailErr:'',
+        confirmPasswordErr:'',
     }
     componentDidUpdate(prevProps){
         const {error,isAuthenticated}=this.props;
@@ -43,6 +45,38 @@ class RegisterModal extends Component {
     }
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value });
+    }
+    onChangeEmail=e=>{
+        let regexEmail=/\S+@\S+\.\S+/;
+        let email=e.target.value
+        if(!regexEmail.test(email)){
+            this.setState({
+                email:email,
+                emailErr:'Please enter valid email'
+            })
+        }else{
+            this.setState({
+                email:email,
+                emailErr:''
+            })
+        }
+
+    }
+    onChangeConfirmPassword=e=>{
+        let password=this.state.password
+       let confirmPassword=e.target.value
+       
+       if(password!==confirmPassword){
+        this.setState({
+            confirmPasswordErr:'Please enter the same password and confirm password',
+            confirmPassword:e.target.value
+        })
+       }else{
+           this.setState({
+            confirmPasswordErr:'',
+            confirmPassword:e.target.value
+           })
+       }
     }
     onSubmit = (e) => {
         e.preventDefault();
@@ -94,8 +128,9 @@ class RegisterModal extends Component {
                                     id="email"
                                     className="mb-3"
                                     placeholder="Enter Email"
-                                    onChange={this.onChange}
+                                    onChange={this.onChangeEmail}
                                 />
+                                 {this.state.emailErr? <Alert color="danger">{this.state.emailErr}</Alert>:null}
                                 <Label for="password">Password</Label>
                                 <Input
                                     required
@@ -106,7 +141,17 @@ class RegisterModal extends Component {
                                     placeholder="Enter Password"
                                     onChange={this.onChange}
                                 />
-
+                                <Label for="confirmPassword">Confirm password</Label>
+                                <Input
+                                    required
+                                    type="password"
+                                    name="confirmPassword"
+                                    id="confirmPassword"
+                                    className="mb-3"
+                                    placeholder="Enter Password"
+                                    onChange={this.onChangeConfirmPassword}
+                                />
+                                 {this.state.confirmPasswordErr? <Alert color="danger">{this.state.confirmPasswordErr}</Alert>:null}
                                 <Button
                                     color="dark"
                                     style={{ marginTop: "2rem" }}

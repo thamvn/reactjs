@@ -11,6 +11,7 @@ import {
      } from 'reactstrap';
 import Logout from './auth/Logout';
 import {connect} from 'react-redux';
+import Login from '../components/auth/Login'
 class AppNavBar extends Component {
     constructor(props) {
         super(props)
@@ -38,15 +39,23 @@ class AppNavBar extends Component {
                 </NavItem>
 
             </Fragment>)
+             const guestLinks=(
+                <Fragment>
+                   
+                    <NavItem>
+                        <Login />
+                    </NavItem>
+                    
+                </Fragment>)
         return (
             <div>
                 <Navbar color="dark" dark expand="sm" className="mb-5">
                     <Container>
-                        <NavbarBrand href="/dashboard">NTB</NavbarBrand>
+                        <NavbarBrand href="/dashboard">Dashboard</NavbarBrand>
                         <NavbarToggler onClick={this.toggle}/>
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="ml-auto" navbar>
-                            {isAuthenticated?authLinks:''}
+                            {isAuthenticated?authLinks:guestLinks}
                                 <NavItem>
                                     <NavLink href="/">
                                         Store

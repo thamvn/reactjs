@@ -18,12 +18,12 @@ export default function(state=initialState,action){
                 products:action.payload,
                 loading:false
             }
-            case GET_PRODUCT_BY_ID:
-                return{
-                    ...state,
-                    products:action.payload,
-                    loading:false
-                }
+        case GET_PRODUCT_BY_ID:
+            return{
+                ...state,
+                products:action.payload,
+                loading:false
+            }
         case DELETE_PRODUCT:
             return{
                 ...state,
@@ -46,9 +46,9 @@ export default function(state=initialState,action){
                 loading:false
             }
         case EDIT_PRODUCT:
-                return{
-                    ...state,
-                    products:action.payload
+            return{
+                ...state,
+                products:action.payload
             }
         default:
             return state

@@ -1,4 +1,4 @@
-import React,{Component,Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 import {
     Collapse,
     Navbar,
@@ -8,70 +8,90 @@ import {
     NavItem,
     NavLink,
     Container,
-     } from 'reactstrap';
-import {connect} from 'react-redux'
+    Badge,
+
+} from 'reactstrap';
+import { connect } from 'react-redux'
 import Logout from './auth/Logout';
 import Login from './auth/Login';
 import RegisterModal from './auth/RegisterModal';
 class StoreNavBar extends Component {
     constructor(props) {
         super(props)
-        this.state=({
-            isOpen:false
+        this.state = ({
+            isOpen: false,
+            popoverOpen: true
+
         })
     }
-    toggle=()=>{
+    toggle = () => {
         this.setState({
-            isOpen:!this.state.isOpen
+            isOpen: !this.state.isOpen
         })
     }
+    togglepopover = () => {
+        this.setState({
+            popoverOpen: !this.state.popoverOpen
+        })
+    }
+
     render() {
-        const{isAuthenticated,user}=this.props.auth
-        console.log(user)
-        const authLinks=(
+        const { isAuthenticated, user } = this.props.auth
+
+        const authLinks = (
             <Fragment>
-                
+
                 <NavItem>
+
                     <span className="navbar-text mr-3">
-                        <strong>{user?`Welcome ${user.name}`:''}</strong>
+                        <strong>{user ? `${user.name}` : ''}</strong>
                     </span>
+
                 </NavItem>
                 <NavItem>
                     <Logout />
                 </NavItem>
+                <NavItem>
+                    <NavLink href="/dashboard">Dashboard</NavLink>
+                </NavItem>
 
             </Fragment>
         );
-        const guestLinks=(
+        const guestLinks = (
             <Fragment>
                 <NavItem>
-                    
-                       <RegisterModal/>
-                    
+
+                    <RegisterModal />
+
                 </NavItem>
 
                 <NavItem>
                     <Login />
                 </NavItem>
-                
+
             </Fragment>
         );
         return (
             <div>
-                <Navbar color="dark" dark expand="sm" className="mb-5">
+                <Navbar color="dark" dark expand="sm" className="mb-5 fixed-top">
                     <Container>
-                        <NavbarBrand href="/">NguyenThaiBinh</NavbarBrand>
-                        <NavbarToggler onClick={this.toggle}/>
+                        <NavbarBrand href="/">Store</NavbarBrand>
+                        <NavbarToggler onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="ml-auto" navbar>
-                                {isAuthenticated?authLinks:guestLinks}
+                                {isAuthenticated ? authLinks : guestLinks}
                                 <NavItem>
-                                    <NavLink href="/cart">
-                                        Cart
-                                     </NavLink>
+                                    <NavLink  href="/cart">
+                                    <i className="fa fa-shopping-cart"> {this.props.cartNum > 0 ? <Badge pill color="danger">
+                                        {this.props.cartNum}
+                                         </Badge>
+                                            : ''}</i> 
+                                          
+
+                                    </NavLink>
                                 </NavItem>
-                                
-                               
+
+
                             </Nav>
                         </Collapse>
                     </Container>
@@ -80,7 +100,7 @@ class StoreNavBar extends Component {
         )
     }
 }
-const mapStateToProps=state=>({
-    auth:state.auth
+const mapStateToProps = state => ({
+    auth: state.auth
 })
-export default connect(mapStateToProps,null)(StoreNavBar)
+export default connect(mapStateToProps, null)(StoreNavBar)

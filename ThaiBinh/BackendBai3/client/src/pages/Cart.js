@@ -52,14 +52,15 @@ class Cart extends Component {
         
         return (
             <Provider store={store}>
-                <StoreNavBar />
-                <Container>
+                <StoreNavBar cartNum={cart.length} />
+                
+                <Container style={{marginTop:"7%"}}>
                     <Breadcrumb>
                         <BreadcrumbItem><a href="/">Home</a></BreadcrumbItem>
                         <BreadcrumbItem active>Cart</BreadcrumbItem>
                     </Breadcrumb>
                 </Container>
-                <Container style={{ marginTop: "5%" }}>
+                <Container style={{ marginTop: "2%" }}>
 
                     <Table striped>
                         <thead>

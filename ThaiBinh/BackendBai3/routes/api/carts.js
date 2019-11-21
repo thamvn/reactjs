@@ -20,7 +20,8 @@ router.post('/',(req,res)=>{
         name:req.body.name,
         price:req.body.price,
         img:req.body.img,
-        productId:req.body._id,
+        productId:req.body.id,
+        userId:req.body.userId
         
     });
     newCart.save().then(cart=>res.json(cart))
@@ -32,7 +33,7 @@ router.delete('/:id',(req,res)=>{
         if (cart) cart.remove();
         else res.status(400).send("item is not exist");    
     })
-    .then((product)=>res.json({product}))
+    .then((product)=>res.json({product}))   
     .catch(err=>console.log(err))
 })
 router.get('/:id',(req,res)=>{

@@ -18,11 +18,11 @@ router.post('/login',
         try {
             let user = await User.findOne({ email });
             if (!user) {
-                return res.status(400).json({ msg: 'Ivalid Credentials' })
+                return res.status(400).json({ msg: 'Invalid Credentials' })
             }
             const isMatch = await bcrypt.compare(password, user.password)
             if(!isMatch){
-                return res.status(400).json({msg:'Ivalid Credentials'})
+                return res.status(400).json({msg:'Invalid Credentials'})
             }
 
 
@@ -39,13 +39,11 @@ router.post('/login',
                     if (err) throw err;
                     res.json({ token,user:{name:user.name} })
                 }
-
-
             )
 
 
         } catch (err) {
-            console.log(err.message);
+            
             res.status(500).send('Server Error!')
         }
 
@@ -60,6 +58,7 @@ router.post('/login',
 //     User.findById(req.user.id)
 //         .select('-password')
 //         .then(user=>res.json(user))
+//         .catch(err=>res.status(400).send(err))
 // })
 router.get('/user', auth, async (req, res) => {
     try {
@@ -68,7 +67,7 @@ router.get('/user', auth, async (req, res) => {
         const user = await User.findById(reqUser.user.id).select('-password')
         res.json(user)
     } catch (err) {
-        console.log(err)
+       
         res.status(500).send('Server Error')
     }
 })

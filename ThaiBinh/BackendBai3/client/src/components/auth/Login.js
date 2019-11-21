@@ -11,7 +11,8 @@ class LoginModal extends Component {
         modal: false,
         email: '',
         password: '',
-        msg: null
+        msg: null,
+        emailErr:''
     }
     componentDidUpdate(prevProps){
         const {error,isAuthenticated}=this.props;
@@ -38,12 +39,14 @@ class LoginModal extends Component {
         //clear Errors
         this.props.clearErrors();
         this.setState({
-            modal: !this.state.modal
+            modal: !this.state.modal,
+            emailErr:''
         })
     }
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value });
     }
+    
     onSubmit = (e) => {
         e.preventDefault();
         const {email,password}=this.state
@@ -54,6 +57,22 @@ class LoginModal extends Component {
         this.props.login(user)
 
         
+    }
+    onChangeEmail=e=>{
+        let regexEmail=/\S+@\S+\.\S+/;
+        let email=e.target.value
+        if(!regexEmail.test(email)){
+            this.setState({
+                email:email,
+                emailErr:'Please enter valid email'
+            })
+        }else{
+            this.setState({
+                email:email,
+                emailErr:''
+            })
+        }
+
     }
     render() {
         
@@ -79,8 +98,9 @@ class LoginModal extends Component {
                                     id="email"
                                     className="mb-3"
                                     placeholder="Enter Email"
-                                    onChange={this.onChange}
+                                    onChange={this.onChangeEmail}
                                 />
+                                 {this.state.emailErr? <Alert color="danger">{this.state.emailErr}</Alert>:null}
                                 <Label for="password">Password</Label>
                                 <Input
                                     type="password"
@@ -97,7 +117,7 @@ class LoginModal extends Component {
                                 >Login</Button>
                             </FormGroup>
                         </Form>
-                        <p>Don't have account yet? <a href="/register">Sign up now</a></p>
+                        
                     </ModalBody>
                 </Modal>
             </div>

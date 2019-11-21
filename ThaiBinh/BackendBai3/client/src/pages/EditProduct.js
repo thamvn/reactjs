@@ -44,8 +44,8 @@ class EditProduct extends Component {
     }
    
     render() {
-        const product=this.props.product.products
-        console.log(product)
+        // const product=this.props.product.products
+      
         return (
            
             <div>

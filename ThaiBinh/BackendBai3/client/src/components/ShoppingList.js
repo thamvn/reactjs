@@ -7,27 +7,30 @@ import {getProducts,deleteProduct   } from '../actions/productActions'
 // import PropTypes from 'prop-types'
 
 class ShoppingList extends Component {
-   
+    constructor(props){
+        super(props)
+        this.state={
+            products:[]
+        }
+    }
     componentDidMount(){
-        this.props.getProducts();
+        // this.props.getProducts();
+        this.setState(() => {
+            this.props.getProducts();
+            return {
+                products: this.props.products
+            }
+        })
     }
     onDeleteClick=(id)=>{
         this.props.deleteProduct(id) 
         
     }
-    // onChangeEditPrice=(id)=>{
-    //     console.log(id)
-    // }
-    // onChangeEditName=(id)=>{
-    //     console.log(id)
-    // }
-    // onEditClick=(id)=>{
-    //     console.log(id)
-    // }
+   
     render() {
-        
-        const {products}=this.props.products;
-        
+        const {products}=this.props.products
+       
+        console.log(this.props)
         return (
             <div>
                 
@@ -61,13 +64,7 @@ class ShoppingList extends Component {
                                
                             </td>
                             <td>
-                               {/* <EditProductModal
-                               name={name}
-                               price={price}
-                               onChangeName={this.onChangeEditName}
-                               onChangePrice={this.onChangeEditPrice}
-                                
-                               /> */}
+                              
                                 <Button
                                     className="edit-btn"
                                     color="primary"

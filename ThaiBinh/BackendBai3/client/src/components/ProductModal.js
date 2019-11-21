@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-    Button, Modal, ModalHeader, ModalBody,Form,FormGroup,Label,Input
+    Button, Modal, ModalHeader, ModalBody,Form,FormGroup,Label,Input,Alert
 } from 'reactstrap'
 import {connect} from 'react-redux';
 import {addProduct } from '../actions/productActions'
@@ -8,7 +8,11 @@ import {addProduct } from '../actions/productActions'
 class ProductModal extends Component {
     state={
         modal:false,
-        name:''
+        name:'',
+        price:'',
+        nameErr:'',
+        priceErr:'',
+
     }
     toggle=()=>{
         this.setState({
@@ -16,14 +20,28 @@ class ProductModal extends Component {
         })
     }
     onChangeName=(e)=>{
-        this.setState({
-            name:e.target.value
-        })
+        let name=e.target.value
+        let regexName = /[A-Z][a-z,0-9," "]{0,10}$/;
+        if (!regexName.test(name)) {
+            this.setState({ nameErr: "The first letter of the name field must be text and Uppercase and it's min=1 cha,max=10 cha", name: name })
+        } else {
+            this.setState({
+                nameErr: '',
+                name: name
+            })
+        }
     }
     onChangePrice=(e)=>{
-        this.setState({
-            price:e.target.value
-        })
+        let price=e.target.value;
+        let regexPrice = /^[0-9]{0,10}$/;
+        if (!regexPrice.test(price)) {
+            this.setState({ priceErr: "You have to fill in the number and min=1, max= 10 character in the price field", price: price })
+        } else {
+            this.setState({
+                price: price,
+                priceErr: ""
+            })
+        }
     }
     onSubmit=(e)=>{
         e.preventDefault();
@@ -32,7 +50,7 @@ class ProductModal extends Component {
             name:this.state.name,
             price:this.state.price
         };
-        console.log("add")
+        
         //Add product via productActions
         this.props.addProduct(newProduct);
 
@@ -63,6 +81,7 @@ class ProductModal extends Component {
                                 placeholder="Enter name"
                                 onChange={this.onChangeName}
                                 />
+                                {this.state.nameErr? <Alert color="danger">{this.state.nameErr}</Alert>:null}
                                  <Label for="Price">Price</Label>
                                 <Input
                                 type="text"
@@ -71,6 +90,7 @@ class ProductModal extends Component {
                                 placeholder="Enter price"
                                 onChange={this.onChangePrice}
                                 />
+                                {this.state.priceErr? <Alert color="danger">{this.state.priceErr}</Alert>:null}
                                 <Button
                                 color="dark"
                                 style={{marginTop:"2rem"}}

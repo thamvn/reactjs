@@ -5,7 +5,7 @@ import {returnErrors} from './errorActions'
 
 export const getProducts=()=> dispatch =>{
    dispatch(setProductsLoading());
-   axios.get('api/products')
+   return axios.get('api/products')
         .then(res=>
             dispatch({
                 type:GET_PRODUCTS,
@@ -33,6 +33,9 @@ export const addProduct=(newProduct)=>(dispatch,getState)=>{
                 payload:res.data
             })
         )
+        .catch(err=>
+            alert(err))
+        
 }
 export const addToCart=(product)=>dispatch=>{
     dispatch(setProductsLoading());

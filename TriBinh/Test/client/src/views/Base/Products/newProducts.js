@@ -138,12 +138,11 @@ export default class newProducts extends Component{
             }
             document.getElementById("inputName").value="";
             document.getElementById("inputPrice").value="";
-            // let list = products.slice();
-            // list.push(objAdd);
-            // localStorage.setItem("products",JSON.stringify(list));
-              itemService.addNewItem(objAdd);
-            alert("Saved");
-            this.props.history.push('/base/tables');
+              itemService.addNewItem(objAdd).then(() => {
+                alert("Saved");
+                this.props.history.push('/base/tables'); 
+              });
+            
           }
           else{
             alert("failed !");

@@ -8,7 +8,7 @@ export default class ProductCard extends Component{
                 <td>{this.props.item.name}</td>
                 <td>{this.props.item.price}</td>
                 <td>{
-                <button onClick={()=>this.props.btnUpdate(this.props.item._id)}>
+                <button className="btn btn-success" onClick={()=>this.props.btnUpdate(this.props.item._id)}>
                 {this.props.item.isAdded?"Remove from Cart":"Add to Cart"}
                 </button>
                 }</td>

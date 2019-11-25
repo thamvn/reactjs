@@ -1,5 +1,6 @@
 import React from 'react';
 
+const Accounts = React.lazy(() => import('./views/Base/Accounts'));
 const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
 const Cards = React.lazy(() => import('./views/Base/Cards'));
 const Cart = React.lazy(() => import('./views/Base/cart'));
@@ -40,7 +41,8 @@ const User = React.lazy(() => import('./views/Users/User'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', exact: true, name: 'Home',component:Dashboard },
+  { path: '/base/accounts', name: 'Account', component: Accounts },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/theme/colors', name: 'Colors', component: Colors },

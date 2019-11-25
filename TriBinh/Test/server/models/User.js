@@ -16,9 +16,17 @@ const UserSchema = new Schema({
         type:String,
         default:''
     },
-    status:{
+    roleAdmin:{
         type:Boolean,
         default:false
+    },
+    status:{
+        type:Boolean,
+        default:true
+    },
+    token:{
+        type:String,
+        default:''
     }
 });
 

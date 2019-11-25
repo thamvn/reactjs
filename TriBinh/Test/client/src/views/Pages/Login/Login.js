@@ -46,11 +46,9 @@ class Login extends Component {
                     localStorage.setItem('token',res.token)
                     localStorage.setItem('user',JSON.stringify(res.user))
                     this.props.history.push('/dashboard');
-
                   }
                 })
                 .catch(err=>console.log(err))
-
     //   let account = JSON.parse(localStorage.getItem('users'));
     //   console.log("1: ", account)
     // const credentials = {username: this.state.username, password: this.state.password};

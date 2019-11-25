@@ -8,10 +8,10 @@ const users = require('./routers/api/users');
 const account = require('./routers/api/signin');
 
 const app = express();
+app.use(cors())
 
 //Bodyparser Middleware
 app.use(bodyParser.json());
-app.use(cors())
 //DB config
 const db = require('./config/key').mongoURI;
 
@@ -27,7 +27,7 @@ app.use('/api/users',users)
 app.use('/api/account',account)
 
 
-const port = process.env.PORT || 5000;
+const port = 5000;
 
 app.listen(port,()=>console.log(`Server started on port ${port}`));
 

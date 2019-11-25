@@ -3,7 +3,8 @@ import axios from 'axios';
 export const userService={
     // setDataToStore,
     getUsers,
-    loginUser
+    loginUser,
+    registerUser
 }
 
 function getUsers(){
@@ -21,14 +22,19 @@ function getUsers(){
     //     }
     // return users;
     // }
-    return axios.get('http://localhost:5000/api/users')
+    return axios.get('/api/users')
                 .then(res=>{return res.data})
                 .catch(err=>{return console.log(err)});
 }
 
 function loginUser(users){
-    return axios.post('http://localhost:5000/api/users/login',users)
+    return axios.post('/api/users/login',users)
                 .then(res=>{return res.data})
-                
+                .catch(err=>{return console.log(err)});
+}
+
+function registerUser(user){
+    return axios.post('/api/users/signup',user)
+                .then(res=>{return res.data})
                 .catch(err=>{return console.log(err)});
 }

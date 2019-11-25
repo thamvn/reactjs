@@ -15,7 +15,7 @@ function getCart(){
 function addToCart(item){
     // let cart = this.getCart();
     // cart.push(item);
-    axios.post('http://localhost:5000/api/cart/add', item)
+    return axios.post('/api/cart/add', item)
     .then(res=>{return res.data})
     .catch(function (error) {
       console.log(error);
@@ -30,7 +30,7 @@ function removeFromCart(id){
     // let newCart = cart.filter(p => p.id !== id+1);
     // localStorage.setItem("cart",JSON.stringify(newCart));
     // axios.delete(`http://localhost:5000/api/cart/remove/${id}`)
-    axios.delete(`http://localhost:5000/api/cart/remove/${id}`)
+    axios.delete(`/api/cart/remove/${id}`)
     .then(res=>{return console.log(res.data)})
     .catch(function (error) {
       console.log(error);

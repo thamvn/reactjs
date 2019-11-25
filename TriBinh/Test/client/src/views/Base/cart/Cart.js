@@ -12,9 +12,11 @@ export default class Cart extends Component{
 
     componentDidMount() {
         cartService.getCart().then(
-            (list)=>this.setState({
-              cart:list 
-            })
+            (list)=>{
+                this.props.newList(list);
+                this.setState({
+                cart:list 
+            })}
           ).catch(function(err){
             console.log(err);
           })
@@ -48,7 +50,7 @@ export default class Cart extends Component{
                                 <td colSpan="3">No item in cart</td>
                             </tr>:
                             this.state.cart.map((item, Num) => 
-                                <tr>
+                                <tr key={item._id}>
                                     <td>{Num+1}</td>
                                     <td>{item.name}</td>
                                     <td>$ {item.price}</td>                                

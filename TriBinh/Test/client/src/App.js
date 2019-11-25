@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HashRouter,Redirect, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 // import { renderRoutes } from 'react-router-config';
 import './App.scss';
 
@@ -16,21 +16,6 @@ const Page500 = React.lazy(() => import('./views/Pages/Page500'));
 
 class App extends Component {
   render() {
-    let account = JSON.parse(localStorage.getItem("userInfo"));
-    if(!account){
-      return (
-        <HashRouter>
-            <React.Suspense fallback={loading()}>
-              <Switch>
-                <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
-                <Route path="/" name="Home" render={props => <DefaultLayout {...props}/>} />
-                <Route render={() => { return <Redirect path='*' to="/login" />; }} />
-              </Switch>
-            </React.Suspense>
-        </HashRouter>
-      );
-    }
-    else{
       return (
         <HashRouter>
             <React.Suspense fallback={loading()}>
@@ -46,6 +31,5 @@ class App extends Component {
       );
     }
   }
-}
 
 export default App;

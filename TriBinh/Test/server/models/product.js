@@ -10,6 +10,10 @@ const ProductSchema = new Schema({
     price:{
         type:Number,
         required:true
+    },
+    isAdded:{
+        type:Boolean,
+        default:false
     }
 });
 

@@ -2,37 +2,61 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
-import usersData from './UsersData'
+// import usersData from './UsersData'
+import { userService } from '../services/userservices';
 
 function UserRow(props) {
   const user = props.user
-  const userLink = `/users/${user.id}`
+  const userLink = `/users/${user._id.toString()}`
 
   const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-      status === 'Inactive' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
-          status === 'Banned' ? 'danger' :
-            'primary'
+    return status === true ? 'success' : 'danger';
+  }
+
+  const getBadgeAdmin = (status) => {
+    return status === true ? 'warning' : 'info'
+  }
+
+  const setStatus = (status) => {
+    return status === true ? "Active" : "DeActive"
+  }
+
+  const setRole = (status) => {
+    return status === true ? "Admin" : "User"
   }
 
   return (
-    <tr key={user.id.toString()}>
-      <th scope="row"><Link to={userLink}>{user.id}</Link></th>
+    <tr key={user._id.toString()}>
       <td><Link to={userLink}>{user.name}</Link></td>
-      <td>{user.registered}</td>
-      <td>{user.role}</td>
-      <td><Link to={userLink}><Badge color={getBadge(user.status)}>{user.status}</Badge></Link></td>
+      <td>{user.email}</td>
+      <td><Link to={userLink}><Badge color={getBadgeAdmin(user.roleAdmin)}>{setRole(user.roleAdmin)}</Badge></Link></td>
+      <td><Link to={userLink}><Badge color={getBadge(user.status)}>{setStatus(user.status)}</Badge></Link></td>
     </tr>
   )
 }
 
 class Users extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      usersData:[]
+    }
+  }
+  
+  componentWillMount() {
+    userService.getUsers().then(
+      (list)=>{
+        this.setState({
+          usersData:list 
+        })
+      }
+    ).catch(function(err){
+      console.log(err);
+    })
+  }
 
   render() {
-
-    const userList = usersData.filter((user) => user.id < 10)
-
+    
     return (
       <div className="animated fadeIn">
         <Row>
@@ -45,15 +69,14 @@ class Users extends Component {
                 <Table responsive hover>
                   <thead>
                     <tr>
-                      <th scope="col">id</th>
                       <th scope="col">name</th>
-                      <th scope="col">registered</th>
+                      <th scope="col">email</th>
                       <th scope="col">role</th>
                       <th scope="col">status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {userList.map((user, index) =>
+                    {this.state.usersData.map((user, index) =>
                       <UserRow key={index} user={user}/>
                     )}
                   </tbody>

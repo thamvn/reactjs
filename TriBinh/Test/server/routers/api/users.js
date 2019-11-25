@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
-const utils = require('../../config/utils')
-const bcrypt = require('bcryptjs')
-
+const utils = require('../../config/utils');
+var validator = require("email-validator");
 //User model
 const User = require('../../models/User');
 
@@ -61,6 +60,12 @@ router.post('/signup', (req,res,next)=>{
             });
         }
 
+        if(!validator.validate(email)){
+          return res.send({
+            success:false,
+            message:'Error: Invalid Email .... Ex: binh@gmail.com.'
+         });
+        }
         //Save new User
         const newUser = new User();
         newUser.email = email;
@@ -76,7 +81,7 @@ router.post('/signup', (req,res,next)=>{
             else{
                 return res.send({
                     success:true,
-                    message:`Account ${user.name} signed up`
+                    message:`Account : ${user.name} signed up`
                     })
                 }
             });
@@ -113,23 +118,47 @@ router.post('/signup', (req,res,next)=>{
     }
     
     email = email.toLowerCase();
-
-    User.findOne({email}).then(
-      user=>{
-        if(!user.validPassword(password))
-        {
-          return res.send('invalid password')
-        }else{
-
-          const payload={
-            user : user.name
-          }
-          const token = jwt.sign(payload, config.secret, 
-            {expiresIn: config.tokenLife}
-          );
-          return res.json({token,user:{name:user.name}})
+    
+      User.findOne({email}).then(
+        user=>{
+          if(!user){
+            return res.send({
+              success: false,
+              message: 'Error: Invalid Email.'
+          });
         }
-    })
+          if(!user.validPassword(password))
+          {
+            return res.send({
+              success: false,
+              message: 'Error: Invalid Password.'
+            });
+          }else{
+            if(user.status==false){
+              return res.send({
+                success: false,
+                message: 'Error: Your Account is disabled!!'
+              })
+            }
+            else{
+              const payload={
+                user : [
+                   user.name,
+                   user.roleAdmin,
+                   user.status
+                ]
+              }
+              const token = jwt.sign(payload, config.secret, 
+                {expiresIn: config.tokenLife}
+              );
+  
+              //get token to db
+              user.token = token;
+              user.save().then(res=>{return console.log(res)})
+              return res.json({token,user:{name:user.name,roleAdmin:user.roleAdmin,status:user.status}})
+            }
+          }
+      })
   })
 
   const TokenCheckMiddleware = async (req, res, next) => {

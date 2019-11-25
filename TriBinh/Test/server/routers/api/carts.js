@@ -20,12 +20,12 @@ router.post('/add',(req,res)=>{
    const newCart = new cart({
        name: req.body.name,
        price: req.body.price,
-       productId:req.body._id
-       
+       productId:req.body._id,
    });
    newCart.save().then(item => res.json(item))
                     .catch(err=>res.status(500).send(err))
 });
+
 router.delete('/remove/:id',(req,res)=>{
     var id=req.params.id;
     cart.deleteMany({productId:id},function(err){

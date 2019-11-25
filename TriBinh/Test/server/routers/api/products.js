@@ -20,14 +20,30 @@ router.post('/add',(req,res)=>{
    const newProduct = new product({
        name: req.body.name,
        price: req.body.price,
+       isAdded: req.body.isAdded
    });
    newProduct.save().then(item => res.json(item))
                     .catch(err=>res.status(500).send(err))
 });
 
+router.post('/changestatus/:id',(req,res)=>{
+    var id = req.params.id;
+    product.findById(id).then(
+        item => {
+            if(!item.isAdded){
+                item.isAdded=true;
+            }
+            else{
+                item.isAdded=false;
+            }
+            item.save().then(item => res.json(item))
+                     .catch(err=>res.status(500).send(err))
+        }
+    ).catch((err)=>res.status(400).send(err));
+ });
+
 router.delete('/remove/:id',(req,res)=>{
     var id=req.params.id;
-
     product.findById(id).then(
         item => {
             item.remove().then(product=>res.json(product))

@@ -76,6 +76,5 @@
     "node": ">=8.10",
     "npm": ">=6"
   },
-  "main": "Nodejs/code.js",
-  "proxy": "http://localhost:5000"
+  "main": "Nodejs/code.js"
 }

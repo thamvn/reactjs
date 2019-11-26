@@ -39,7 +39,7 @@ export const addProduct=(newProduct)=>(dispatch,getState)=>{
 }
 export const addToCart=(product)=>dispatch=>{
     dispatch(setProductsLoading());
-    axios.post('/api/cart',product)
+   return axios.post('/api/cart',product)
     .then(res=>
         dispatch({
             type:ADD_TO_CART,
@@ -53,7 +53,7 @@ export const addToCart=(product)=>dispatch=>{
  
  export const getProductById=(id)=>dispatch=>{
     dispatch(setProductsLoading());
-     axios.get(`/api/products/${id}`)
+     return axios.get(`/api/products/${id}`)
         .then(res=>
             dispatch({
                 type:GET_PRODUCT_BY_ID,
@@ -64,15 +64,15 @@ export const addToCart=(product)=>dispatch=>{
  }
  export const editProduct=(product)=>(dispatch,getState)=>{
 
-    axios.put(`/api/products/${product._id}`,product,tokenConfig(getState))
+   return axios.put(`/api/products/${product._id}`,product,tokenConfig(getState))
     .then(res=>
         dispatch({
             type:EDIT_PRODUCT,
             payload:res.data
         })
-        .then(alert("Editting Successfully"))
+        
     )
-    .catch(err=>console.log(err))
+    .catch(err=>dispatch({payload:err.response.data}))
  }
 export const setProductsLoading=()=>{
     return {

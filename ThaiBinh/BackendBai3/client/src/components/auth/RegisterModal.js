@@ -12,6 +12,7 @@ class RegisterModal extends Component {
         name: '',
         email: '',
         password: '',
+        passwordErr:'',
         msg: null,
         emailErr:'',
         confirmPasswordErr:'',
@@ -43,8 +44,29 @@ class RegisterModal extends Component {
             modal: !this.state.modal
         })
     }
-    onChange = e => {
-        this.setState({ [e.target.name]: e.target.value });
+    onChangeName = e => {
+        let name=e.target.value
+        let regexName = /^[a-zA-Z 0-9]{4,20}$/;
+        if (!regexName.test(name)) {
+            this.setState({ nameErr: "Please enter name from 4 to 20 and without special character", name: name })
+        } else {
+            this.setState({
+                nameErr: '',
+                name: name
+            })
+        }
+    }
+    onChangePassword = e => {
+        let password=e.target.value
+        let regexPassword = /^[a-zA-Z 0-9]{4,20}$/;
+        if (!regexPassword.test(password)) {
+            this.setState({ passwordErr: "please enter from 4 to 20 character", password: password })
+        } else {
+            this.setState({
+               passwordErr: '',
+                password: password
+            })
+        }
     }
     onChangeEmail=e=>{
         let regexEmail=/\S+@\S+\.\S+/;
@@ -118,8 +140,9 @@ class RegisterModal extends Component {
                                     id="name"
                                     className="mb-3"
                                     placeholder="Enter name"
-                                    onChange={this.onChange}
+                                    onChange={this.onChangeName}
                                 />
+                                {this.state.nameErr? <Alert color="danger">{this.state.nameErr}</Alert>:null}
                                 <Label for="email">Email</Label>
                                 <Input
                                     required
@@ -139,8 +162,9 @@ class RegisterModal extends Component {
                                     id="password"
                                     className="mb-3"
                                     placeholder="Enter Password"
-                                    onChange={this.onChange}
+                                    onChange={this.onChangePassword}
                                 />
+                                {this.state.passwordErr? <Alert color="danger">{this.state.passwordErr}</Alert>:null}
                                 <Label for="confirmPassword">Confirm password</Label>
                                 <Input
                                     required

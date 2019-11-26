@@ -67,7 +67,8 @@ router.put('/:id',auth,(req,res)=>{
         product.price=req.body.price,
         product.img=req.body.img,
        
-        product.save().then(respone=>res.json(respone))
+        product.save().then(product=>res.json(product))
+                        .catch(error=>res.status(400).send(error))
     })
     
     .catch(err=>res.status(404).json({err}))

@@ -30,7 +30,7 @@ class ShoppingList extends Component {
     render() {
         const {products}=this.props.products
        
-        console.log(this.props)
+       
         return (
             <div>
                 
@@ -47,7 +47,7 @@ class ShoppingList extends Component {
                            </tr>
                        </thead>
                        <tbody>
-                       {products.map(({_id,name,price})=>(
+                       {products!==null&&products.length>0?products.map(({_id,name,price})=>(
                             <tr key={_id}>
                             <th scope="row">{_id}</th>
                             
@@ -65,19 +65,19 @@ class ShoppingList extends Component {
                             </td>
                             <td>
                               
-                                <Button
-                                    className="edit-btn"
-                                    color="primary"
-                                    size="md"
-                                    onClick={this.props.onEditClick.bind(this,_id)}
-                                    >Edit
-                                </Button>
-                               
-                               
-                            </td>
+                              <Button
+                                  className="edit-btn"
+                                  color="primary"
+                                  size="md"
+                                  onClick={this.props.onEditClick.bind(this,_id)}
+                                  >Edit
+                              </Button>
+                             
+                             
+                          </td>
                            
                         </tr>
-                       ))}
+                       )):null}
                           
                            
                           

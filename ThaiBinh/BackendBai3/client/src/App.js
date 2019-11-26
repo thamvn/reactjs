@@ -13,7 +13,10 @@ import { Container } from 'reactstrap'
 import { loadUser } from './actions/authActions'
 class App extends Component {
   componentDidMount() {
-    store.dispatch(loadUser())
+    
+        store.dispatch(loadUser())
+    
+    
     
   }
 
@@ -22,7 +25,7 @@ class App extends Component {
   }
   render() {
     const { isAuthenticated } = this.props.auth
-   
+    
     const viewTrue = <Provider store={store}>
       <div className="App">
         <AppNavBar />

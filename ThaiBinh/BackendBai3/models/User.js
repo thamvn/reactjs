@@ -17,6 +17,10 @@ const UserSchema=new Schema({
         required:true,
        
     },
+    role:{
+        type:String,
+        default:'guest'
+    },
     img:String,
     
     

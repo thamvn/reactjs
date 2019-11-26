@@ -37,7 +37,13 @@ router.post('/login',
                 { expiresIn: 3600 },
                 (err, token) => {
                     if (err) throw err;
-                    res.json({ token,user:{name:user.name} })
+                    res.json({
+                        token, user: {
+                            name: user.name,
+                            id:user._id,
+                            role:user.role
+                        }
+                    })
                 }
             )
 

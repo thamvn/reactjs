@@ -73,11 +73,12 @@ class ProductModal extends Component {
         };
         
         //Add product via productActions
-        this.props.addProduct(newProduct);
+        this.props.addProduct(newProduct).then(product=>{window.location.reload()});
 
         //Close modal
         this.toggle()
         this.clearText()
+        // window.location.reload()
     }
     render() {
         return (

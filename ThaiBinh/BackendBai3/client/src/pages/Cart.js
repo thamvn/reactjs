@@ -35,21 +35,13 @@ class Cart extends Component {
 
                 this.setState({
                     cart: cart
-                })
-                
+                }) 
             }
-
         })
-        
-
     }
     componentDidUpdate(prevProps, prevState) {
-
         let user = this.state.user
-        
         if (prevState.user !== user) {
-            console.log('didupdate')
-
             let cart = cartService.getLocalCart()
             let userId = user._id
             for (let i = 0; i < cart.length; i++) {
@@ -96,10 +88,6 @@ class Cart extends Component {
             })
             
         }
-        
-        
-        
-
     }
     onClickMinus = (id) => {
         let auth = this.props.auth
@@ -109,9 +97,7 @@ class Cart extends Component {
             if (product[0].quantity > 1) {
                 product[0].quantity--
                 this.forceUpdate()
-
             }
-            
         }else{
             let cartItems=cartService.getLocalCart()
             
@@ -123,33 +109,24 @@ class Cart extends Component {
                     cart:cartItems
                 })
             }
-           
         }
-        
-        
-        
     }
-    onClickDelete=(id)=>{
-        
-       
+    onClickDelete=(id)=>{ 
         let auth = this.props.auth
         if(auth.isAuthenticated){
-            
             this.props.removeFromCart(id).then(product=>{
                 let cartItems=[...this.state.cart]
                 cartItems=cartItems.filter(item=>item._id!==product.payload._id)
                 this.setState({
                     cart:cartItems
                 })
-            })
-            
+            })   
         }else{
             let cartItems=cartService.getLocalCart();
             cartItems=cartService.removeFromLocalCart(id)
             this.setState({
                 cart:cartItems
             })
-            
         }
     }
     getNumCart=(cart)=>{
@@ -161,7 +138,6 @@ class Cart extends Component {
         return cartNum
     }
     render() {
-        
         return (
             <Provider store={store}>
                 <StoreNavBar cartNum={this.getNumCart(this.state.cart)} />
@@ -181,7 +157,6 @@ class Cart extends Component {
                                 <th>Product Name</th>
                                 <th>Price</th>
                                 <th style={{ textAlign: "center" }} colSpan="3"></th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -222,12 +197,7 @@ class Cart extends Component {
                                 </tr>
 
                             )):null}
-
-
-
                         </tbody>
-
-
                     </Table>
                     <h3 style={{ float: "right", marginRight: "11%" }}>Total<span style={{ marginLeft: "20%" }}>
                         {

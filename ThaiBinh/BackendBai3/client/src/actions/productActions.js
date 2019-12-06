@@ -28,7 +28,6 @@ export const getProducts=()=> dispatch =>{
 }
 export const getProductsByPage=(page,size)=> dispatch =>{
     dispatch(setProductsLoading());
-    console.log('page '+page,'size '+size)
     return axios.get(`/api/products/${page}/${size}`)
          .then(res=>
              dispatch({
@@ -40,7 +39,7 @@ export const getProductsByPage=(page,size)=> dispatch =>{
  }
 export const deleteProduct=(id)=>(dispatch,getState)=>{
 
-   axios.delete(`/api/products/${id}`,tokenConfig(getState))
+   return axios.delete(`/api/products/${id}`,tokenConfig(getState))
         .then(res=>
             dispatch({
                 type:DELETE_PRODUCT,
@@ -54,7 +53,7 @@ export const addProduct=(newProduct)=>(dispatch,getState)=>{
     data.append('productImage',newProduct.image);
     data.append('name',newProduct.name);
     data.append('price',newProduct.price)
-    axios.post('/api/products',data,tokenProductConfig(getState))
+    return axios.post('/api/products',data,tokenProductConfig(getState))
         .then(res=>
             dispatch({
                 type:ADD_PRODUCT,

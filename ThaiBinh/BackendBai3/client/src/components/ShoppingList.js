@@ -14,68 +14,62 @@ class ShoppingList extends Component {
             currentPage: 1,
             productsPerPages: 5,
             totalPages: '',
-            disable:false,
+            disable: false,
+
         }
     }
     componentDidMount() {
-        console.log('didmount')
         let { currentPage, productsPerPages } = this.state
         this.props.getProductsByPage(currentPage, productsPerPages)
             .then(items => this.props.countProducts()
                 .then(
-                    num =>this.setState({
-                        products:items.payload,
-                        totalPages:Math.ceil(num.payload/productsPerPages)
+                    num => this.setState({
+                        products: items.payload,
+                        disable: currentPage === Math.ceil(num.payload / productsPerPages) ? true : false,
+                        totalPages: Math.ceil(num.payload / productsPerPages)
                     })
                 )
             )
-
     }
-    componentDidUpdate(prevProps,prevState){
-        let {currentPage,productsPerPages,totalPages}=this.state;
-        
-        let newProducts=[...this.state.products]
-        
-        if(prevState.currentPage!==this.state.currentPage){
-            
-            this.props.getProductsByPage(currentPage,productsPerPages).then(items=>{
-                for(let i=0;i<items.payload.length;i++){
+    componentDidUpdate(prevProps, prevState) {
+        let { currentPage, productsPerPages, totalPages } = this.state;
+        let newProducts = [...this.state.products]
+        if (prevState.currentPage !== this.state.currentPage) {
+            this.props.getProductsByPage(currentPage, productsPerPages).then(items => {
+                for (let i = 0; i < items.payload.length; i++) {
                     newProducts.push(items.payload[i])
                 }
-                if(currentPage===totalPages){
+                if (currentPage === totalPages) {
                     this.setState({
-                        products:newProducts,
-                        disable:true,
+                        products: newProducts,
+                        disable: true,
                     })
                 }
                 this.setState({
-                    products:newProducts
+                    products: newProducts
                 })
-                console.log(newProducts)
             })
-            
         }
     }
     onDeleteClick = (id) => {
+        let products = [...this.state.products]
+        products = products.filter(product => product._id !== id)
+        this.setState({
+            products: products
+        })
         this.props.deleteProduct(id)
-
     }
     onLoadMoreClick = () => {
-        let {currentPage}=this.state
-        if(currentPage<this.state.totalPages)
-        {
+        let { currentPage } = this.state
+        if (currentPage < this.state.totalPages) {
             this.setState({
-                currentPage:this.state.currentPage+1
+                currentPage: this.state.currentPage + 1
             })
         }
-        
     }
     render() {
         const { products } = this.state
-        
         return (
-            <div>
-
                 <Container style={{ marginTop: "5%" }}>
 
                     <Table striped>
@@ -122,32 +116,16 @@ class ShoppingList extends Component {
 
                                 </tr>
                             )) : null}
-
-
-
                         </tbody>
-
-
                     </Table>
                     <Button disabled={this.state.disable} onClick={() => this.onLoadMoreClick()} size="lg" color="secondary">Load More</Button>
-
                 </Container>
-
-
-            </div>
         )
     }
 }
-
-// ShoppingList.propTypes={
-//     getProducts:PropTypes.func.isRequired,
-//     product:PropTypes.object.isRequired
-// }
-
 const mapStatetoProps = (state) => ({
     products: state.products
 })
-
 export default connect(mapStatetoProps,
     {
         getProducts, getProductsByPage,

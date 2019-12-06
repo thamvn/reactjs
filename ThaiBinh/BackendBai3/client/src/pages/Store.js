@@ -71,10 +71,9 @@ class Store extends Component {
         })
 
     }
-    getTotalPages = () => {
+    getTotalPages = (productsNum,productsPerPage) => {
         
-        let productsNum = this.state.productsNum;
-        let productsPerPage = this.state.productsPerPage
+       
         let totalPages = Math.ceil(productsNum / productsPerPage)
         let pages = [];
         for (let i = 0; i < totalPages; i++) {
@@ -131,7 +130,7 @@ class Store extends Component {
         let items = this.state.products
         let product = [...items.filter(product => product._id === id)]
         if (auth.isAuthenticated) {
-            this.props.getProductInCartOfSpecificUser(auth.user._id, product[0]._id)
+            this.props.getProductInCartOfSpecificUser(auth.user._id, id)
                 .then(action => {
                     if (action.payload) {
 
@@ -191,6 +190,7 @@ class Store extends Component {
         }
 
     }
+    
     onPageChange = (page) => {
 
         this.setState({
@@ -200,8 +200,13 @@ class Store extends Component {
     }
     onProductsPerPageChange = (e) => {
         let currentPage = this.props.match.params.page
-
+        let totalRecords=this.state.productsNum
         let productsPerPage = Number(e.target.value)
+        let pages=this.getTotalPages(totalRecords,productsPerPage)
+        if(currentPage>pages.length){
+            currentPage=pages.length
+            this.props.history.push(`/store/${pages.length}`)
+        }
         productService.setProductsPerPageToLocal(productsPerPage)
         this.setState({
             productsPerPage: productsPerPage,
@@ -211,7 +216,7 @@ class Store extends Component {
     }
     render() {
         let isLoading = this.props.products.loading;
-        let pages = this.getTotalPages();
+        let pages = this.getTotalPages(this.state.productsNum,this.state.productsPerPage);
         let auth = this.props.auth
         let role = ''
         if (auth.user) {
@@ -236,9 +241,9 @@ class Store extends Component {
                                 </Label>
                                 <Input value={this.state.productsPerPage || 3} type="select" name="productPerPage" onChange={this.onProductsPerPageChange}>
                                     <option value="1">1</option>
+                                    <option value="2">2</option>
                                     <option value="3">3</option>
-                                    <option value="6">6</option>
-                                    <option value="9">9</option>
+                                    <option value="4">4</option>
 
                                 </Input>
                             </FormGroup>

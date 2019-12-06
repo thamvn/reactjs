@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 import './notfound.css';
 import AppNavBar from './components/AppNavBar'
+import StoreNavBar from './components/StoreNavBar'
 import ShoppingList from './components/ShoppingList'
 import { Provider } from 'react-redux'
 import store from './store';
@@ -23,9 +24,12 @@ class App extends Component {
   handleEditClick = (id) => {
     this.props.history.push(`./edit/${id}`)
   }
-  render() {
-    const { isAuthenticated } = this.props.auth
+  handleLoadMoreClick=()=>{
     
+  }
+  render() {
+    const { isAuthenticated,user } = this.props.auth
+   
     const viewTrue = <Provider store={store}>
       <div className="App">
         <AppNavBar />
@@ -38,10 +42,23 @@ class App extends Component {
 
       </div>
     </Provider>
-    
+    const viewFalse=<Provider store={store}>
+      <StoreNavBar/>
+      <div id="notfound">
+        <div className="notfound">
+          <div className="notfound-404">
+            <div></div>
+            <h1>401</h1>
+          </div>
+          <h2>Unauthorized</h2>
+          <p>You don't have permission to access this page</p>
+          <a href="/">home page</a>
+        </div>
+      </div>
+  </Provider>
     return (
       <Fragment>
-        {isAuthenticated ? viewTrue :<AppNavBar/>}
+        {isAuthenticated ? user?user.role==='admin' ?viewTrue:viewFalse:null :<StoreNavBar/>}
       </Fragment>
     );
   }

@@ -39,17 +39,17 @@ router.delete('/:id',(req,res)=>{
     
     .catch(err=>console.log(err))
 })
+//get product in cart of specific user
+router.get('/:userId/:productId',(req,res)=>{
+    Cart.find({$and:[{userId:req.params.userId},{productId:req.params.productId}]})
+        .then(product=>{
+            if(product)
+            res.json(product[0])
+            else res.status(404).json({msg:'Item not exist'})
+        })
+        .catch(err=>console.log(err))
 
-// router.get('/:id',(req,res)=>{
-//     Cart.findById(req.params.id)
-//         .then(product=>{
-//             if(product)
-//             res.json(product)
-//             else res.status(404).json({msg:'Item not exist'})
-//         })
-//         .catch(err=>console.log(err))
-
-// });
+});
 //Get user cart
 router.get('/:id',(req,res)=>{
     let userId=req.params.id
@@ -68,10 +68,7 @@ router.put('/:id',(req,res)=>{
     Cart.findById(req.params.id)
     .then(product=>{
         if(product){
-        product.name=req.body.name,
-        product.price=req.body.price,
-        product.img=req.body.img,
-        product.productId=req.body._id,
+       
         product.quantity=req.body.quantity
         }else res.status(500).send("Cannot find product")
         product.save()

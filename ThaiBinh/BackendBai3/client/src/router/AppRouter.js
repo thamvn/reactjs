@@ -12,10 +12,10 @@ export default class AppRouter extends Component {
             <div>
                 <Router>
                     <Route exact path="/" component={Store} />
-                    <Route exact path="/dashboard" component={App} />
+                    <Route path="/dashboard" component={App} />
                     <Route path='/edit/:id' component={EditProduct} />
                     <Route path="/cart" component={Cart} />
-                    
+                    <Route path="/store/:page" component={Store}/>
                    
                 </Router>
             </div>

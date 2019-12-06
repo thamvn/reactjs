@@ -112,3 +112,20 @@ export const tokenConfig=getState=>{
      }
      return config
 }
+export const tokenProductConfig=getState=>{
+    //get token from localStorage
+    const token=getState().auth.token
+   
+    //Headers
+    const config = {
+        headers: {
+          
+        }
+    };
+    //If token, add to headers
+    if(token){
+        config.headers['x-auth-token']=token;
+
+    }
+    return config
+}

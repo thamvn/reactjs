@@ -2,9 +2,14 @@ export const cartService={
     addToLocalCart,
     removeFromLocalCart,
     getLocalCart,
-    editQuantityLocalCart
+    editQuantityLocalCart,
+    findProductInLocalCart,
+    setLocalCart
 }
 const keyName='cart'
+function setLocalCart(cart){
+    localStorage.setItem(keyName,JSON.stringify(cart))
+}
 function getLocalCart(){
     let cart=JSON.parse(localStorage.getItem(keyName));
     return cart||[];
@@ -15,6 +20,12 @@ function addToLocalCart(product){
   localStorage.setItem(keyName,JSON.stringify(cart));
   
   
+}
+function findProductInLocalCart(id){
+    let cart=this.getLocalCart();
+    let product=cart.filter(item=>item.productId===id)
+    return product[0]
+
 }
 function removeFromLocalCart(id){
     let cart=this.getLocalCart();

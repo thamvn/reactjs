@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_CART,REMOVE_FROM_CART,CART_LOADING,EDIT_CART,GET_USER_CART } from "./type";
+import { GET_CART,REMOVE_FROM_CART,CART_LOADING,EDIT_CART,GET_USER_CART,GET_PRODUCT_IN_CART_OF_SPECIFIC_USER } from "./type";
 
 
 export const getCart=()=> dispatch =>{
@@ -21,6 +21,15 @@ export const getCart=()=> dispatch =>{
                         payload:res.data
                     })
                 ).catch(err=>console.log(err))
+ }
+ export const getProductInCartOfSpecificUser=(userId,productId)=>dispatch=>{
+     return axios.get(`/api/cart/${userId}/${productId}`)
+                    .then(res=>
+                        dispatch({
+                            type:GET_PRODUCT_IN_CART_OF_SPECIFIC_USER,
+                            payload:res.data
+                        })
+                    ).catch(err=>console.log(err))
  }
  export const editCart=(product)=>dispatch=>{
     axios.put(`/api/cart/${product._id}`,product)

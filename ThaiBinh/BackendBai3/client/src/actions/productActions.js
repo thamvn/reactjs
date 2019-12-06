@@ -1,11 +1,23 @@
 import axios from 'axios'
-import { GET_PRODUCTS,ADD_PRODUCT,DELETE_PRODUCT,PRODUCTS_LOADING,ADD_TO_CART,GET_PRODUCT_BY_ID,EDIT_PRODUCT } from "./type";
-import {tokenConfig} from './authActions'
+import { GET_PRODUCTS,ADD_PRODUCT,DELETE_PRODUCT,PRODUCTS_LOADING,ADD_TO_CART,GET_PRODUCT_BY_ID,EDIT_PRODUCT,COUNT_PRODUCTS,GET_PRODUCTS_BY_PAGE } from "./type";
+import {tokenConfig,tokenProductConfig} from './authActions'
 import {returnErrors} from './errorActions'
 
+
+export const countProducts=()=> dispatch =>{
+    
+    return axios.get('/api/products/num')
+         .then(res=>
+             dispatch({
+                 type:COUNT_PRODUCTS,
+                 payload:res.data
+             })
+         )
+         .catch(err=>dispatch(returnErrors(err.response.data,err.response.status)))
+ }
 export const getProducts=()=> dispatch =>{
    dispatch(setProductsLoading());
-   return axios.get('api/products')
+   return axios.get('/api/products')
         .then(res=>
             dispatch({
                 type:GET_PRODUCTS,
@@ -14,6 +26,18 @@ export const getProducts=()=> dispatch =>{
         )
         .catch(err=>dispatch(returnErrors(err.response.data,err.response.status)))
 }
+export const getProductsByPage=(page,size)=> dispatch =>{
+    dispatch(setProductsLoading());
+    console.log('page '+page,'size '+size)
+    return axios.get(`/api/products/${page}/${size}`)
+         .then(res=>
+             dispatch({
+                 type:GET_PRODUCTS_BY_PAGE,
+                 payload:res.data
+             })
+         )
+         .catch(err=>dispatch(returnErrors(err.response.data,err.response.status)))
+ }
 export const deleteProduct=(id)=>(dispatch,getState)=>{
 
    axios.delete(`/api/products/${id}`,tokenConfig(getState))
@@ -26,7 +50,11 @@ export const deleteProduct=(id)=>(dispatch,getState)=>{
         .catch(err=>dispatch(returnErrors(err.response.data,err.response.status)))
 }
 export const addProduct=(newProduct)=>(dispatch,getState)=>{
-    axios.post('/api/products',newProduct,tokenConfig(getState))
+    const data = new FormData();
+    data.append('productImage',newProduct.image);
+    data.append('name',newProduct.name);
+    data.append('price',newProduct.price)
+    axios.post('/api/products',data,tokenProductConfig(getState))
         .then(res=>
             dispatch({
                 type:ADD_PRODUCT,
@@ -34,7 +62,7 @@ export const addProduct=(newProduct)=>(dispatch,getState)=>{
             })
         )
         .catch(err=>
-            alert(err))
+            alert('Create product failed'))
         
 }
 export const addToCart=(product)=>dispatch=>{

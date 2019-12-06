@@ -152,11 +152,19 @@ class Cart extends Component {
             
         }
     }
+    getNumCart=(cart)=>{
+        let cartNum=0;
+        for(let i=0;i<cart.length;i++){
+            
+            cartNum+=cart[i].quantity
+        }
+        return cartNum
+    }
     render() {
         
         return (
             <Provider store={store}>
-                <StoreNavBar cartNum={this.state.cart.length} />
+                <StoreNavBar cartNum={this.getNumCart(this.state.cart)} />
                 
                 <Container style={{marginTop:"7%"}}>
                     <Breadcrumb>

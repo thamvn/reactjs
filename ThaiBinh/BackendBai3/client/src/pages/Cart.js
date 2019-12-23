@@ -4,14 +4,62 @@ import StoreNavBar from '../components/StoreNavBar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Provider } from 'react-redux'
 import store from '../store';
-import { getCart,editCart,removeFromCart } from '../actions/cartActions'
+import { getUserCart,editCart,removeFromCart } from '../actions/cartActions'
+import {addToCart} from '../actions/productActions'
 import { connect } from 'react-redux';
 import {loadUser} from '../actions/authActions'
+import {cartService} from '../services/cart.service'
 class Cart extends Component {
+    state = {
+        cart: [],
+        user: null
+    }
     componentDidMount() {
-        store.dispatch(loadUser())
-        this.props.getCart();
+       
+        this.props.loadUser().then(action => {
 
+            if (action) {
+                this.setState({
+                    user:action.payload
+                })
+                
+                this.props.getUserCart(action.payload._id).then(cart => {
+                    if(cart)
+                    this.setState(({
+                        cart: cart.payload,
+                       
+                    }))
+                });
+            } else {
+                let cart = cartService.getLocalCart();
+
+                this.setState({
+                    cart: cart
+                }) 
+            }
+        })
+    }
+    componentDidUpdate(prevProps, prevState) {
+        let user = this.state.user
+        if (prevState.user !== user) {
+            let cart = cartService.getLocalCart()
+            let userId = user._id
+            for (let i = 0; i < cart.length; i++) {
+
+                cart[i].userId = userId
+            }
+           
+            localStorage.setItem('cart', JSON.stringify(cart))
+            cart.forEach(element => {
+                this.props.addToCart(element).then(
+
+                    cart => {
+
+                        localStorage.removeItem('cart')
+                    }
+                )
+            });
+        }
     }
     getTotalPrice = (cart) => {
         let totalPrice = 0;
@@ -22,37 +70,77 @@ class Cart extends Component {
     }
     
     onClickPlus = (id) => {
-        let cartItems = this.props.cart
-        let product=cartItems.cart.filter(product=>product._id===id)
-        product[0].quantity++;
-        this.props.editCart(product[0])
-        this.forceUpdate()
-        
-        
-
-    }
-    onClickMinus = (id) => {
-        let cartItems = this.props.cart
-        let product=cartItems.cart.filter(product=>product._id===id)
-        if(product[0].quantity>1){
-            product[0].quantity--
+        let auth=this.props.auth
+        if(auth.isAuthenticated){
+            let cartItems = this.props.cart
+            let product = cartItems.cart.filter(product => product._id === id)
+            product[0].quantity++;
+            this.props.editCart(product[0])
             this.forceUpdate()
+        }else{
+            let cartItems=cartService.getLocalCart()
+            
+            let product=cartItems.filter(product => product._id === id)
+            product[0].quantity++;
+            cartItems=cartService.editQuantityLocalCart(product[0])
+            this.setState({
+                cart:cartItems
+            })
             
         }
-        else{
-            product[0].quantity--
-            this.props.removeFromCart(id)
-            this.forceUpdate()
+    }
+    onClickMinus = (id) => {
+        let auth = this.props.auth
+        if (auth.isAuthenticated) {
+            let cartItems = this.props.cart
+            let product = cartItems.cart.filter(product => product._id === id)
+            if (product[0].quantity > 1) {
+                product[0].quantity--
+                this.forceUpdate()
+            }
+        }else{
+            let cartItems=cartService.getLocalCart()
+            
+            let product=cartItems.filter(product => product._id === id)
+            if(product[0].quantity>1){
+                product[0].quantity--;
+                cartItems=cartService.editQuantityLocalCart(product[0])
+                this.setState({
+                    cart:cartItems
+                })
+            }
         }
-        
-        
+    }
+    onClickDelete=(id)=>{ 
+        let auth = this.props.auth
+        if(auth.isAuthenticated){
+            this.props.removeFromCart(id).then(product=>{
+                let cartItems=[...this.state.cart]
+                cartItems=cartItems.filter(item=>item._id!==product.payload._id)
+                this.setState({
+                    cart:cartItems
+                })
+            })   
+        }else{
+            let cartItems=cartService.getLocalCart();
+            cartItems=cartService.removeFromLocalCart(id)
+            this.setState({
+                cart:cartItems
+            })
+        }
+    }
+    getNumCart=(cart)=>{
+        let cartNum=0;
+        for(let i=0;i<cart.length;i++){
+            
+            cartNum+=cart[i].quantity
+        }
+        return cartNum
     }
     render() {
-        const { cart } = this.props.cart;
-        
         return (
             <Provider store={store}>
-                <StoreNavBar cartNum={cart.length} />
+                <StoreNavBar cartNum={this.getNumCart(this.state.cart)} />
                 
                 <Container style={{marginTop:"7%"}}>
                     <Breadcrumb>
@@ -68,12 +156,11 @@ class Cart extends Component {
                                 <th>Quantity</th>
                                 <th>Product Name</th>
                                 <th>Price</th>
-                                <th style={{ textAlign: "center" }} colSpan="2">Action</th>
-
+                                <th style={{ textAlign: "center" }} colSpan="3"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {cart.map(({ _id, name, price,quantity }) => (
+                            {this.state.cart.length>0?this.state.cart.map(({ _id, name, price,quantity }) => (
                                 <tr key={_id}>
                                     <th scope="row">{quantity}</th>
                                     <td>{name}</td>
@@ -97,19 +184,24 @@ class Cart extends Component {
                                         >-
                                         </Button>
                                     </td>
+                                    <td>
+
+                                        <Button
+                                            className="delete-btn"
+                                            color="secondary"
+                                            size="sm"
+                                            onClick={this.onClickDelete.bind(this, _id)}
+                                        >x
+                                        </Button>
+                                    </td>
                                 </tr>
 
-                            ))}
-
-
-
+                            )):null}
                         </tbody>
-
-
                     </Table>
                     <h3 style={{ float: "right", marginRight: "11%" }}>Total<span style={{ marginLeft: "20%" }}>
                         {
-                            this.getTotalPrice(cart)
+                            this.getTotalPrice(this.state.cart)
                         }
                     </span></h3>
                 </Container>
@@ -118,9 +210,10 @@ class Cart extends Component {
     }
 }
 const mapStatetoProps = (state) => ({
-    cart: state.cart
+    cart: state.cart,
+    auth:state.auth
 })
 export default connect(mapStatetoProps, {
-    getCart,editCart,removeFromCart
+    getUserCart,editCart,removeFromCart,loadUser,addToCart
 })(Cart)
 

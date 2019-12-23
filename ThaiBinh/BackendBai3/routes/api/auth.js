@@ -21,6 +21,7 @@ router.post('/login',
                 return res.status(400).json({ msg: 'Invalid Credentials' })
             }
             const isMatch = await bcrypt.compare(password, user.password)
+            
             if(!isMatch){
                 return res.status(400).json({msg:'Invalid Credentials'})
             }
@@ -37,7 +38,13 @@ router.post('/login',
                 { expiresIn: 3600 },
                 (err, token) => {
                     if (err) throw err;
-                    res.json({ token,user:{name:user.name} })
+                    res.json({
+                        token, user: {
+                            name: user.name,
+                            id:user._id,
+                            role:user.role
+                        }
+                    })
                 }
             )
 

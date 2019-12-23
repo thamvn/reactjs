@@ -51,9 +51,7 @@ class StoreNavBar extends Component {
                 <NavItem>
                     <Logout />
                 </NavItem>
-                <NavItem>
-                    <NavLink href="/dashboard">Dashboard</NavLink>
-                </NavItem>
+               
 
             </Fragment>
         );
@@ -89,9 +87,13 @@ class StoreNavBar extends Component {
                                           
 
                                     </NavLink>
+                                    
                                 </NavItem>
-
-
+                                {this.props.role==='admin'?<NavItem>
+                                   
+                                   <NavLink href="/dashboard">Dashboard</NavLink>
+                               </NavItem>:''}
+                                
                             </Nav>
                         </Collapse>
                     </Container>

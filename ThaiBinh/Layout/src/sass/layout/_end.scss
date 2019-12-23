@@ -1,0 +1,30 @@
+.end {
+    background-color:$primary-bg;
+    padding:50px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    div {
+        flex:1;
+        h2 {
+        
+            word-break: break-word;
+            font-size:45px;
+            line-height: 45px;
+        }
+        button {
+            flex:1;
+            padding:20px 30px;
+            font-size: 20px;
+            color:white;
+            background: $primary;
+            border:3px solid white;
+            border-radius:50px;
+        }
+    }
+    div:last-child {
+        text-align: right;
+    }
+    
+    
+}

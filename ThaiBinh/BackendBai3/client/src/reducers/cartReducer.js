@@ -1,4 +1,4 @@
-import {GET_CART,REMOVE_FROM_CART,EDIT_CART} from '../actions/type'
+import {GET_CART,REMOVE_FROM_CART,EDIT_CART, GET_USER_CART,GET_PRODUCT_IN_CART_OF_SPECIFIC_USER} from '../actions/type'
 const initialState={
     cart:[],
     loading:false
@@ -6,7 +6,9 @@ const initialState={
 }
 export default function(state=initialState,action){
     switch(action.type){
+        case GET_USER_CART:
         case GET_CART:
+        case GET_PRODUCT_IN_CART_OF_SPECIFIC_USER:
             return{
                 ...state,
                 cart:action.payload,

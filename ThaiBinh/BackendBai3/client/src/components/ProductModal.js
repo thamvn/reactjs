@@ -10,6 +10,8 @@ class ProductModal extends Component {
         modal:false,
         name:'',
         price:'',
+        image:null,
+        imageURL:'',
         nameErr:'',
         priceErr:'',
 
@@ -43,19 +45,40 @@ class ProductModal extends Component {
             })
         }
     }
+    onImageChange=(e)=>{
+        let image=e.target.files[0]
+        let imageURL=URL.createObjectURL(image)
+        this.setState({
+            image:image,
+            imageURL:imageURL
+        })
+    }
+    clearText=()=>{
+        this.setState({
+            name:'',
+            price:'',
+            image:null,
+            imageURL:'',
+            nameErr:'',
+            priceErr:'',
+        })
+    }
     onSubmit=(e)=>{
         e.preventDefault();
         const newProduct={
           
             name:this.state.name,
-            price:this.state.price
+            price:this.state.price,
+            image:this.state.image
         };
         
         //Add product via productActions
-        this.props.addProduct(newProduct);
+        this.props.addProduct(newProduct).then(product=>{window.location.reload()});
 
         //Close modal
         this.toggle()
+        this.clearText()
+        // window.location.reload()
     }
     render() {
         return (
@@ -82,18 +105,36 @@ class ProductModal extends Component {
                                 onChange={this.onChangeName}
                                 />
                                 {this.state.nameErr? <Alert color="danger">{this.state.nameErr}</Alert>:null}
-                                 <Label for="Price">Price</Label>
+                                 
+                                
+                               
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="Price">Price</Label>
                                 <Input
-                                type="text"
-                                name="name"
-                                id="price"
-                                placeholder="Enter price"
-                                onChange={this.onChangePrice}
+                                    type="text"
+                                    name="name"
+                                    id="price"
+                                    placeholder="Enter price"
+                                    onChange={this.onChangePrice}
                                 />
-                                {this.state.priceErr? <Alert color="danger">{this.state.priceErr}</Alert>:null}
+                                {this.state.priceErr ? <Alert color="danger">{this.state.priceErr}</Alert> : null}
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="image">Product Image</Label>
+                                <Input
+                                    type="file"
+                                    name="image"
+                                    id="image"
+                                    placeholder="Upload image"
+                                    onChange={this.onImageChange}
+                                />
+                                <img style={{ width: "70%", height: "70%" }} src={this.state.imageURL} alt="" />
+                            </FormGroup>
+                            <FormGroup>
                                 <Button
-                                color="dark"
-                                style={{marginTop:"2rem"}}
+                                    color="dark"
+                                    style={{ marginTop: "2rem" }}
                                 >Add Item</Button>
                             </FormGroup>
                        </Form>

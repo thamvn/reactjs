@@ -1,0 +1,107 @@
+.shop {
+    background: url('../assets/shop-bg.jpg');
+    margin-top:100px;
+    padding:100px 0;
+    .title {
+        padding-top:0px;
+        h1,p {
+            color:white
+        }
+        hr {
+            border-color: #bfbfbf;
+        }
+    }
+    &__content {
+        margin:100px 80px 0 80px;
+        display: flex;
+        justify-content: space-around;
+        img {
+            width:100%;
+            object-fit: cover;
+            height: 400px;
+        }
+        div {
+            margin-right:50px;
+            
+            background: white;
+        }
+        div:last-child {
+            margin-right:0;
+        }
+        .sold-out {
+            position: relative;
+            .triangle {
+                width: 0;
+                height: 0;
+                border-left: 7px solid transparent;
+                border-right: 7px solid transparent;
+                border-top: 12px solid white;
+                position: absolute;
+                background: none;
+                top:26px;
+                left:55px;
+            }
+            .triangle::after{
+                content:"";
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 10px solid #333;
+                position: absolute;
+                background: none;
+                top:-14px;
+                left:-5px;
+               
+            }
+           
+        }
+        .sold-out::before{
+            content:"Sold out";
+            position: absolute;
+            top:-25px;
+            background: #333;
+            border:2px solid white;
+            color:white;
+            padding:15px 30px;
+            border-radius:30px;
+            font-weight: 700;
+
+        }
+        &__text {
+            padding:15px 25px;
+            .checked {
+                color:blue;
+            }
+            &__stuff{
+                color:#999
+            }
+            &__price {
+                color:black;
+                font-size:30px;
+                
+            }
+            &__price--sale {
+                font-size:18px;
+                text-decoration: line-through;
+                color:#999;
+            }
+            #sale {
+                display: flex;
+                align-items: center;
+            }
+        }
+       
+        button {
+            width: 100%;
+            background: white;
+            border-top:2px solid $primary-bg;
+            padding: 20px 25px;
+            font-size:18px;
+            text-align: left;
+            color:#666
+        }
+        
+         
+    }
+}

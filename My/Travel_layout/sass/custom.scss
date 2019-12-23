@@ -1,0 +1,652 @@
+$bg-default: #ffffff;
+$bg-dark : #000000;
+$bg-primary: #0275d8;
+$bg-info : #5bc0de;
+$bg-warning: #f0ad4e;
+$bg-danger: #d9534f;
+$bg-success: #5cb85c ;
+$bg-inverse: #292b2c;
+$bg-violet: #ee82ee;
+$bg-orange: #dd6617;
+header {
+    background-color: $bg-default;
+    .navbar {
+        font-size: 18px;
+        line-height: 3.0;
+        margin: 0 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-height: 100px;
+        .logo {
+            display: flex;
+            align-items: center;
+            margin: 0px;
+            line-height: 0px;
+            .dot {
+                color: $bg-orange;
+                font-size: 40px;
+            }
+        }
+    }
+    .intro{
+       background-image: url('../image/nature_call-2560x1440.jpg');
+       height: 700px;
+       object-fit: cover;
+       color: $bg-default;
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+    }
+    .menu {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        li {
+            display: flex;
+            align-items: center;
+            img{
+                width: 20px;
+                margin: 0px 10px;
+            }
+            margin: 0px 25px;
+        }
+        div {
+            display: flex;
+            align-items: center;
+        }
+        a {
+            text-decoration: none;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight:  bolder;
+            color: $bg-dark;
+        }
+        img {
+            width: 20px;
+            margin: 0px 5px 5px 5px;
+        }
+    }
+}
+.content {
+    margin: 0px 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .content-medium {
+        max-width: 230px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bolder;
+        font-size: 17px;
+        margin: 30px 0px;
+    }
+    .content-large {
+        max-width: 550px;
+        font-weight: bolder;
+        line-height: 1.2;
+        font-size: 51px;
+    }
+    .content-normal {
+        margin: 40px 0px;
+        font-size: 17px;
+        max-width: 580px;
+        font-family: Arial, Helvetica, sans-serif;
+        
+    }    
+}
+.trip-planner__content-large {
+    max-width: 550px;
+    font-weight: bolder;
+    line-height: 1.2;
+    font-size: 48px;
+}
+.trip-planner__content-normal {
+    margin: 40px 0px 50px 0px;
+    font-size: 16px;
+    max-width: 580px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: gray;
+    
+}
+.scroll-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 50px;
+    background-color: $bg-default;
+    height: 400px;
+    color: $bg-dark;
+    .number {
+        margin:25px 0px 0px 0px;
+    }
+    &-height {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .scroll-button {
+        margin:0px 0px 25px 0px;
+        button{
+            border: none;
+            background-color: transparent;
+            outline: none;
+            display: flex;
+            align-items: center;
+        }
+    }
+    .bar {
+        width: 3px;
+        height:130px;
+        background-color: $bg-inverse;
+    }
+    .circle{
+        width: 10px;
+        height: 5px;
+        background-color: $bg-dark;
+    }
+}
+.watch-intro {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0px;
+    top: 680px;
+    iframe {
+        width: 390px;
+        height: 200px;
+    }
+    .line {
+        height: 100px;
+        margin-top: 50px;
+        margin-right: 5px;
+        display:flex;
+        flex-direction: column;
+        align-items: flex-end;
+        hr {
+            margin: 2px 0px;
+            border:none;
+            background-color: gray;
+            width: 25px;
+            transform:skewY(45deg);
+            height: 5px;
+        }
+    }
+}
+.fillter{
+    display: flex;
+    margin: 0px 390px 0px 0px;
+    background-color: $bg-default;
+}
+.fillter-bar {
+    margin-left: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    span {
+        color : gray;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bolder;
+        font-size: 14px;
+    }
+    .item { 
+        display: flex;
+        flex-direction: column;
+    }
+    select {
+            margin-top: 10px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 16px;
+            font-weight: bolder;
+            border-right: none;
+            border-top: none;
+            border-left: none;
+            border-bottom: 2px solid gray;
+            width: 150px;
+            max-width: 220px;
+            outline: none;
+            background-color: $bg-default;
+        }
+    .button-book {
+        width: 200px;
+        height: 200px;
+        button {
+            border: none;
+            outline: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .text-book {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                span {
+                    font-size: 30px;
+                    font-family: Georgia, 'Times New Roman', Times, serif;
+                    color: $bg-default;
+                }
+                font-size: 30px;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                color: $bg-default;
+                
+            }
+            width: 100%;
+            background-color:#e92d4d;
+            height: 100%;
+        }
+    }
+}
+.trip-planner{
+    height:780px;
+    display: flex;
+    .line {
+        margin-top: 90px;
+        margin-right: 175px;
+        display:flex;
+        flex-direction: column;
+        align-items: flex-end;
+        height: 170px;
+        hr {
+            margin: 3px 0px;
+            border:none;
+            background-color: gray;
+            width: 30px;
+            transform:skewY(45deg);
+            height: 5px;
+        }
+    }
+    &__content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        &__text {
+            width: 30%;
+            max-width: 400px;
+            .button-view{
+                position: relative;
+                width: 220px;
+                height: 70px;
+                .block-color-first {
+                    position: absolute;
+                    width: 50px;
+                    height: 50px;
+                    bottom: 20px;
+                    right: 170px;
+                    background-color: $bg-dark;
+                }
+                .block-color-last {
+                    position: absolute;
+                    top: 20px;
+                    left: 170px;
+                    width: 50px;
+                    height: 50px;
+                    background-color: gray;
+                }
+                button{
+                    position: absolute;
+                    width: 200px;
+                    height: 50px;
+                    top: 10px;
+                    right: 10px;
+                    left: 10px;
+                    bottom: 10px;
+                    z-index: 1;
+                    border:none;
+                    background-color: $bg-orange;
+                    color: $bg-default;
+                    font-family: 'Times New Roman', Times, serif;
+                    font-size: 18px;
+                }
+            }
+        }
+        &__image {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            .planner {
+                display: flex;
+                justify-content: space-between;
+                transition: 1s height all;
+                &-item{
+                    height: 400px;
+                    width:300px;
+                    display: flex;
+                    flex-direction: column;
+                    .toure {
+                        margin: 10px 0px;
+                        font-size: 14px;
+                        font-family: Arial, Helvetica, sans-serif;
+                        justify-content: space-between;
+                        color: gray;
+                        display: none;
+                        span{
+                            color: $bg-dark;
+                            font-weight: bolder;
+                        }
+                    }s
+                    .city{
+                        display: none;
+                        font-size: 20px;
+                    }
+                    .detail {
+                        display: none;
+                        font-family: Arial, Helvetica, sans-serif;
+                        justify-content: space-between;
+                        color: gray;
+                        margin: 10px 0px;
+                        .rate {
+                            width: 100px;
+                            img{
+                                width: 50px;
+                                height: auto;
+                            }
+                        }
+                        
+                    }
+                }
+                &-item:hover {
+                    height : 600px;
+                    transition: 1s height all;
+                    .toure {
+                        display: flex;
+                    }
+                    .city {
+                        display: block;
+                    }
+                    .detail {
+                        display: flex;
+                    }
+                }
+                img{
+                    object-fit: cover;
+                    width: 300px;
+                    height : 400px;
+                }
+                .planner-item:last-child{
+                   display: none;
+                }
+            }
+            .button-slide{
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 30px;
+                padding-right: 200px;
+                font-size: 80px;
+                font-weight: 900;
+                color: black;
+                button {
+                    width: 50px;
+                    height: 50px;
+                    border: none;
+                    background-color: $bg-default;
+                    outline: none;
+                    margin-left: 10px;
+                }
+                button:focus{
+                    background-color: $bg-dark;
+                    color: $bg-default;
+                }
+            }
+        }
+    }
+}
+.room-site{
+    margin: 0px 200px 0px 200px;
+    &-detail {
+        height: 100%;
+        width: 100%;
+        &__title {
+            font-size:50px ;
+            font-weight: bolder;
+            margin-bottom: 35px;
+        }
+        &__subtitle {
+            font-size: 16px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: gray;
+            margin-bottom: 60px;
+        }
+        &__image {
+            display: flex;
+            justify-content: space-between;
+            height: 650px;
+            .image-protait {
+                width: 470px;
+                height: 650px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                background-image: url('../image/room/latest-french-country-master-bedroom-ideas-17-best-ideas-about-french-country-bedrooms-on-pinterest-french.jpg');
+            }
+            .image-lanscape {
+                height: 650px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                .image-lanscape-first {
+                    width: 470px;
+                    height: 300px;
+                    display:flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    background-image: url('../image/room/0013486_torino-upholstered-rustic-pine-king-sleigh-bedroom-ii_1200.jpeg');
+                    object-fit: cover;
+                 }
+                 .image-lanscape-second {
+                    width: 470px;
+                    height: 300px;
+                    display:flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    background-image: url('../image/room/1700-dark-oak.jpg');
+                    object-fit: cover;
+                 }
+                 .image-lanscape-third {
+                    width: 470px;
+                    height: 300px;
+                    display:flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    background-image: url('../image/room/amazing-of-french-country-master-bedroom-ideas-french-country-blue-paint-colors-master-bedroom-soft-blue-walls.jpg');
+                    object-fit: cover;
+                 }
+                 .image-lanscape-forth {
+                    width: 470px;
+                    height: 300px;
+                    display:flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    background-image: url('../image/room/master-bedroom-furniture-package-c9-x.jpg');
+                    object-fit: cover;
+                 }
+            }
+            .price {
+                color: $bg-default;
+                font-size: 18px;
+                font-family:Arial, Helvetica, sans-serif ;
+                margin: 0px 0px 20px 30px;
+            }
+            .name {
+                color: $bg-default;
+                font-size: 30px;
+                font-weight: bolder;
+                margin: 0px 0px 30px 30px;
+            }
+        }
+    }
+}
+.traveller {
+    .line {
+        height:300px;
+        margin-right: 145px;
+        display:flex;
+        flex-direction: row;
+        align-items: flex-end;
+        &-first {
+            margin-bottom: 22px;
+            hr {
+                margin: 3px 0px;
+                border:none;
+                background-color: gray;
+                width: 15px;
+                transform:skewY(45deg);
+                height: 5px;
+            }
+        }
+        &-second {
+            margin-bottom: 30px;
+            hr {
+                margin: 3px 0px;
+                border:none;
+                background-color: gray;
+                width: 30px;
+                transform:skewY(-45deg);
+                height: 5px;
+            }
+        }
+    }
+    &-site {
+        margin: 85px 200px 0px 200px;
+        &__title {
+            font-size:50px ;
+            font-weight: bolder;
+            margin-bottom: 35px;
+        }
+        &__subtitle {
+            font-size: 16px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: gray;
+            margin-bottom: 60px;
+        }
+    }
+    &-content {
+        display: flex;
+        justify-content: space-between;
+        &__item {
+            width: 28%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            img {
+                margin-left: 50px;
+                margin-bottom: -50px;
+                border-radius: 50%;
+                width: 100px;
+                height: 100px;
+                z-index: 1;
+            }
+            .block-text {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
+                height: 250px;
+                background-color: $bg-default;
+                &__detail {
+                    margin: 35px 50px 0px 50px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    color: gray;
+                }
+                &__name {
+                    margin: 25px 50px 10px 50px;
+                    font-size: 16px;
+                    font-weight: bolder;
+                }
+                &__position {
+                    margin: 0px 50px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    color: gray;
+                }
+            }
+        }
+    }
+}
+.subscribe{
+    margin:200px 0px 135px 0px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &-title {
+        text-align: center;
+        font-weight: bolder;
+        font-size: 50px;
+        max-width: 420px;
+        margin-bottom: 85px;
+    }
+    &-form {
+        display: flex;
+        input {
+            width: 600px;
+            height: 100px;
+            border: none;
+            outline: none;
+        }
+        input::placeholder {
+            font-size: 20px;
+            text-indent: 50px;
+          }
+        button {
+            width: 200px;
+            height: 100px;
+            border: none;
+            outline: none;
+            background-color:#e92d4d;
+            color: $bg-default;
+            font-size: 30px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+    }
+}
+.menu-footer {
+    font-size: 18px;
+    line-height: 3.0;
+    margin: 0px 200px 0px 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-height: 100px;
+    .logo {
+        display: flex;
+        align-items: center;
+        margin: 0px;
+        line-height: 0px;
+        .dot {
+            color: $bg-orange;
+            font-size: 40px;
+        }
+    }
+    .menu {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        li {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            font-weight: bolder;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            margin: 0px 25px;
+            a {
+                text-decoration: none;
+                color: $bg-dark;
+            }
+            a::selection {
+                color: $bg-dark;
+            }
+        }
+    }
+    .icon-social {
+        width: 110px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 18px;
+    }
+}

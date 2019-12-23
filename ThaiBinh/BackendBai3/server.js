@@ -10,7 +10,7 @@ const users=require('./routes/api/users')
 const auth=require('./routes/api/auth')
 //Body Parser
 app.use(bodyParser.json());
-
+app.use('/uploads',express.static('uploads'))
 //Db config
 const db=config.get('mongoURI')
 

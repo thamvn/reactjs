@@ -17,8 +17,8 @@ const CartSchema=new Schema({
         type:String,
         required:true,
     },
-    userID:{
-        type:String
+    userId:{
+        type:String,
         
     },
     quantity:{

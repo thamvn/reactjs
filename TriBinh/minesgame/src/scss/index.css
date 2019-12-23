@@ -1,0 +1,166 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100%;
+}
+
+body #root {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body #root .minesweeper {
+  width: 50%;
+  margin-top: 20px;
+  border: 3px solid #b8a5a5;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body #root .minesweeper h1 {
+  text-align: center;
+  border-left: 1px solid #444;
+  border-top: 1px solid #444;
+  border-right: 1px solid #444;
+}
+
+body #root .minesweeper .board {
+  border: 1px solid #444;
+  border-bottom: none;
+}
+
+body #root .minesweeper .board .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 40px;
+}
+
+body #root .minesweeper .board .row:last-child {
+  border-bottom: none;
+}
+
+body #root .minesweeper .board .row .one {
+  color: blue;
+}
+
+body #root .minesweeper .board .row .two {
+  color: green;
+}
+
+body #root .minesweeper .board .row .three {
+  color: red;
+}
+
+body #root .minesweeper .board .row .four {
+  color: purple;
+}
+
+body #root .minesweeper .board .row .cell {
+  border-right: 1px solid #444;
+  font-weight: bold;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid #444;
+}
+
+body #root .minesweeper .board .row .cell:hover {
+  background-color: #eeeeee;
+}
+
+body #root .minesweeper .board .row .cell:last-child {
+  border-right: none;
+}
+
+body #root .minesweeper .board .row .open {
+  background-color: #d4d4d4;
+}
+
+body #root .minesweeper .board .row .open:hover {
+  background-color: #d4d4d4;
+}
+
+body #root .minesweeper .board-head {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  height: 10%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-left: 1px solid #444;
+  border-right: 1px solid #444;
+  padding: 10px;
+}
+
+body #root .minesweeper .board-head .flag-count {
+  font-size: 25px;
+}
+
+body #root .minesweeper .board-head .reset {
+  font-size: 30px;
+}
+
+body #root .minesweeper .board-head .timer {
+  font-size: 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 414px) {
+  body #root h1 {
+    font-size: 20px;
+    padding: 15px;
+  }
+  body #root .minesweeper {
+    height: 80%;
+  }
+  body #root .minesweeper .board {
+    width: 100%;
+    height: 80%;
+  }
+  body #root .minesweeper .board .row .cell {
+    width: 30%;
+  }
+  body #root .minesweeper .board-head {
+    height: 20%;
+  }
+}
+/*# sourceMappingURL=index.css.map */

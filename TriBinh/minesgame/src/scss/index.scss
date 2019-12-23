@@ -1,0 +1,133 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100%;
+    #root {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .minesweeper {
+            width: 50%;
+            margin-top: 20px;
+            border: 3px solid rgb(184, 165, 165);
+            display: flex;
+            flex-direction: column;
+            h1 {
+                text-align: center;
+                border-left: 1px solid #444;
+                border-top: 1px solid #444;
+                border-right: 1px solid #444;
+            }
+            .board {
+                border: 1px solid #444;
+                border-bottom: none;
+                .row {
+                    display: flex;
+                    height: 40px;
+                    
+                    &:last-child {
+                        border-bottom: none;
+                    }
+
+                    .one {
+                        color: blue;
+                    }
+
+                    .two {
+                        color: green;
+                    }
+
+                    .three {
+                        color: red;
+                    }
+
+                    .four {
+                        color: purple;
+                    }
+                    
+                    .cell {
+                        border-right: 1px solid #444;
+                        font-weight: bold;
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border-bottom: 1px solid #444;
+                        &:hover {
+                            background-color: #eeeeee;
+                        }
+        
+                        &:last-child {
+                            border-right: none;
+                        }
+                    }
+        
+                    .open {
+                        background-color: #d4d4d4;
+        
+                        &:hover {
+                            background-color: #d4d4d4;
+                        }
+                    }
+                }
+            }
+        
+            .board-head {
+                display: flex;
+                flex-direction: row;
+                height: 10%;
+                justify-content: space-between;
+                align-items: center;
+                border-left: 1px solid #444;
+                border-right: 1px solid #444;
+                padding: 10px;
+        
+                .flag-count {
+                    font-size: 25px;
+                }
+                
+                .reset {
+                    font-size: 30px;
+                }
+        
+                .timer {
+                    font-size: 25px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            
+            }
+        }
+    }
+}
+
+@media (max-width: 414px) {
+    body {
+        #root {
+            h1 {
+                font-size: 20px;
+                padding: 15px;
+            }
+            .minesweeper {
+                height: 80%;
+                .board {
+                    width: 100%;
+                    height: 80%;
+                    .row {
+                        .cell {
+                            width: 30%;
+                        }
+                    }
+                }
+            
+                .board-head {
+                    height: 20%;
+                }
+            }
+        }
+    }
+}
